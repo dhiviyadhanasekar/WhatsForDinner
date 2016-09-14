@@ -37,4 +37,20 @@ public class MainActivity extends AppCompatActivity {
 //        Log.v("My tag", "Clicked OKKKKKKK");
         appInfoPopup.dismiss();
     }
+
+    public void showMeals(View view){
+
+    }
+
+    public void showRecipies(View view){
+
+    }
+
+    public void showAddNewDish(View view){
+
+    }
+
+    public void showGroceries(View view){
+
+    }
 }
