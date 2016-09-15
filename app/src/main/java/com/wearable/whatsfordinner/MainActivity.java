@@ -1,6 +1,7 @@
 package com.wearable.whatsfordinner;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
@@ -39,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void showMeals(View view){
-
+        startActivity(new Intent(MainActivity.this, MealsActivity.class));
     }
 
     public void showRecipies(View view){
@@ -47,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void showAddNewDish(View view){
-
+        startActivity(new Intent(MainActivity.this, NewDishActivity.class));
     }
 
     public void showGroceries(View view){
