@@ -13,6 +13,12 @@ public class DataRecipie {
     private String recipieName = "";
     private Uri imageUri = null;
 
+    public void DataRecipie(){
+        for(int i=0; i<DataConstants.MAX_INGREDIENT_COUNT; i++){
+            ingredients.add(new DataIngredient());
+        }
+    }
+
     public List<DataIngredient> getIngredients(){
         return ingredients;
     }

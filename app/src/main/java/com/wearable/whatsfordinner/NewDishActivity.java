@@ -11,8 +11,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
 public class NewDishActivity extends AppCompatActivity {
 
@@ -24,14 +29,58 @@ public class NewDishActivity extends AppCompatActivity {
     DataHolder dataInstance = DataHolder.getInstance();
     private DataRecipie recipie = new DataRecipie();
 
+//    private ListView lv;
+//    ArrayAdapter<String> adapter;
+//    EditText inputSearch;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_dish);
 
-        final EditText recipeNameEditText = (EditText) findViewById(R.id.recipeNameEditText);
+//        final EditText recipeNameEditText = (EditText) findViewById(R.id.recipeNameEditText);
         recipieImageView = (ImageView) findViewById(R.id.recipie_photo);
 
+        // Listview Data
+        final String products[] = {"Dell Inspiron", "HTC One X", "HTC Wildfire S", "HTC Sense", "HTC Sensation XE",
+                "iPhone 4S", "Samsung Galaxy Note 800",
+                "Samsung Galaxy S3", "MacBook Air", "Mac Mini", "MacBook Pro"};
+        for(int i=1; i<DataConstants.MAX_INGREDIENT_COUNT+1; i++) {
+            initIngredientView(products, i);
+        }
+    }
+
+    private void initIngredientView(final String[] products, final int i) {
+        int ingredientInputRowId = getResources().getIdentifier("ingredient_input_row" + i,
+                "id", getPackageName());
+        View v = findViewById(ingredientInputRowId);
+        final ListView lv = (ListView) v.findViewById(R.id.list_view);
+        lv.setVisibility(View.GONE);
+        final EditText inputSearch = (EditText) v.findViewById(R.id.inputSearch);
+        ImageButton showIngredientsButton = (ImageButton) v.findViewById(R.id.showIngredientsButton);
+
+        showIngredientsButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Log.v("Lv visiility", lv.isShown() + "");
+                lv.setVisibility(lv.isShown() == true ? View.GONE : View.VISIBLE);
+                if(lv.isShown()) {
+                    lv.getLayoutParams().height = (int) getResources().getDimension(R.dimen.recipieImageView_height);
+                }
+            }
+        });
+        // Adding items to listview
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.list_item, R.id.list_item, products);
+        lv.setAdapter(adapter);
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> arg0, View arg1, int pos,
+                                    long arg3) {
+//                Toast.makeText(getApplicationContext(),"hiihih",Toast.LENGTH_SHORT).show();
+                Log.v("onclick list it " + i ,products[pos]);
+                inputSearch.setText(products[pos]);
+                lv.setVisibility(View.GONE);//listview.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     public void addRecipieImage(View view){
