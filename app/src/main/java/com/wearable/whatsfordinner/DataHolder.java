@@ -22,12 +22,18 @@ public class DataHolder {
 
     private static void populateDummyRecipies() {
         DataRecipie hamburger = new DataRecipie();
-        recipieNames.put("hamburger", hamburger);
+        recipieNames.put("ham", hamburger);
     }
 
     public boolean recipieExists(String newRecipieName){
         newRecipieName = newRecipieName.toLowerCase();
         if(recipieNames.containsKey(newRecipieName)) return true;
         return false;
+    }
+
+    public DataRecipie getRecipie(String recipieName){
+        recipieName = recipieName.toLowerCase();
+        if(recipieNames.containsKey(recipieName)) recipieNames.get(recipieName);
+        return null;
     }
 }

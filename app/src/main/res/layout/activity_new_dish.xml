@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentStart="true"
+    android:layout_marginTop="0dp"
     tools:context="com.wearable.whatsfordinner.NewDishActivity"
     android:padding="15dp"
     android:id="@+id/newDishActivity">
+
+<RelativeLayout android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_below="@+id/textView11"
+    android:minHeight="700dp">
 
     <EditText
         android:layout_width="fill_parent"
@@ -18,29 +26,37 @@
         android:layout_centerHorizontal="true"
         android:focusableInTouchMode="true" />
 
-    <ImageView
-        android:layout_width="150dp"
-        android:layout_height="100dp"
-        android:id="@+id/imageView5"
-        android:layout_marginTop="17dp"
-        android:src="@drawable/ic_default_recipie"
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_below="@+id/recipeNameEditText"
-        android:layout_alignLeft="@+id/recipeNameEditText"
-        android:layout_alignStart="@+id/recipeNameEditText" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
-    <ImageView
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:id="@+id/ic_add_recipie"
-        android:layout_marginTop="14dp"
-        android:layout_alignTop="@+id/imageView5"
-        android:layout_toRightOf="@+id/imageView5"
-        android:layout_toEndOf="@+id/imageView5"
-        android:layout_marginLeft="25dp"
-        android:layout_marginStart="25dp"
-        android:src="@drawable/ic_gray_plus"
-        android:clickable="true"
-        android:onClick="addRecipieImage" />
+        <ImageView
+            android:layout_width="@dimen/recipieImageView_width"
+            android:layout_height="@dimen/recipieImageView_height"
+            android:id="@+id/recipie_photo"
+            android:src="@drawable/ic_default_recipie"
+            android:layout_below="@+id/recipeNameEditText"
+            android:layout_alignLeft="@+id/recipeNameEditText"
+            android:layout_alignStart="@+id/recipeNameEditText" />
+
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:id="@+id/ic_add_recipie"
+            android:src="@drawable/ic_gray_plus"
+            android:clickable="true"
+            android:onClick="addRecipieImage"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/recipie_photo"
+            android:layout_toEndOf="@+id/recipie_photo"
+            android:layout_marginLeft="72dp"
+            android:layout_marginStart="72dp"
+            android:layout_marginTop="15dp" />
+    </LinearLayout>
 
     <TextView
         android:layout_width="wrap_content"
@@ -48,11 +64,12 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Ingredients:"
         android:id="@+id/textView11"
-        android:layout_marginTop="21dp"
-        android:layout_below="@+id/imageView5"
-        android:layout_alignLeft="@+id/imageView5"
-        android:layout_alignStart="@+id/imageView5" />
-
+        android:layout_marginTop="147dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
 
 </RelativeLayout>
+</ScrollView>
+

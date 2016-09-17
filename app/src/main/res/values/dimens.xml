@@ -4,4 +4,6 @@
     <dimen name="activity_vertical_top_margin">0dp</dimen>
     <dimen name="activity_vertical_bottom_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="recipieImageView_width">100dp</dimen>
+    <dimen name="recipieImageView_height">100dp</dimen>
 </resources>
