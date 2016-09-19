@@ -35,7 +35,7 @@ android:layout_alignParentLeft="true"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Ingredients:"
         android:id="@+id/textView11"
-        android:layout_marginTop="147dp"
+        android:layout_marginTop="157dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
@@ -61,32 +61,46 @@ android:layout_alignParentLeft="true"
         <include layout="@layout/ingredient_input_row" android:id="@+id/ingredient_input_row10"/>
     </LinearLayout>
 
-    <Button android:layout_width="match_parent"
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:clickable="true"
-        android:enabled="true"
-        android:id="@+id/recipieSubmitButton"
-        android:onClick="submitRecipie"
-        android:text="Save"
-        android:layout_below="@+id/editText3"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Recipie Instructions (max 250 characters):"
+        android:id="@+id/textView12"
+        android:layout_below="@+id/linearLayout2"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="10dp" />
 
     <EditText
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="140dp"
         android:inputType="textMultiLine"
         android:ems="10"
-        android:id="@+id/editText3"
-        android:layout_below="@+id/linearLayout2"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="5dp"
-        android:hint="Enter recipie instructions (max 250 characters)"
+        android:id="@+id/recipieInstructionsEditText"
+        android:hint="Click here to enter instructions"
         android:allowUndo="true"
         android:visibility="visible"
-        android:maxLength="250"/>
+        android:maxLength="25"
+        android:layout_below="@+id/textView12"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:gravity="top"
+        android:background="@drawable/text_view_border"
+        android:padding="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp" />
+
+    <Button android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:enabled="true"
+        android:id="@+id/recipieSubmitButton"
+        android:onClick="saveRecipie"
+        android:text="Save"
+        android:layout_below="@+id/recipieInstructionsEditText"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>
 

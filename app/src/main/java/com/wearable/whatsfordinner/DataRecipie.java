@@ -12,11 +12,12 @@ public class DataRecipie {
     private List<DataIngredient> ingredients = new ArrayList<DataIngredient>();
     private String recipieName = "";
     private Uri imageUri = null;
+    private String instructions = "";
 
-    public void DataRecipie(){
-        for(int i=0; i<DataConstants.MAX_INGREDIENT_COUNT; i++){
-            ingredients.add(new DataIngredient());
-        }
+    public DataRecipie(){
+//        for(int i=0; i<DataConstants.MAX_INGREDIENT_COUNT; i++){
+//            ingredients.add(new DataIngredient());
+//        }
     }
 
     public List<DataIngredient> getIngredients(){
@@ -28,7 +29,12 @@ public class DataRecipie {
     public Uri getImageUri(){
         return imageUri;
     }
+    public String getInstructions() { return  instructions; }
 
+//    public void addIngredient(DataIngredient newIngredient){
+//        ingredients.add(newIngredient);
+//        DataHolder.getInstance().addNewIngredient(newIngredient.getName());
+//    }
     public void setIngredients(List<DataIngredient> newIngredients){
         this.ingredients = newIngredients;
     }
@@ -38,4 +44,5 @@ public class DataRecipie {
     public void setImageUri(Uri imageUri){
         this.imageUri = imageUri;
     }
+    public void setInstructions(String instructions){ this.instructions = instructions; }
 }

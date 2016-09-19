@@ -11,25 +11,25 @@
     android:id="@+id/ingredient_input_row"
     android:weightSum="1">
 
-    <include layout="@layout/list_view" />
+    <include layout="@layout/list_view"
+        android:layout_width="wrap_content" />
 
     <EditText
         android:layout_width="45dp"
         android:layout_height="wrap_content"
         android:inputType="number"
         android:ems="10"
-        android:id="@+id/editText"
+        android:id="@+id/inputQty"
         android:layout_alignTop="@+id/linearLayout"
         android:layout_toRightOf="@+id/linearLayout"
         android:layout_toEndOf="@+id/linearLayout"
-        android:hint="Qty"
-        android:layout_marginLeft="5dp" />
+        android:hint="Qty" />
 
     <EditText
-        android:layout_width="83dp"
+        android:layout_width="71dp"
         android:layout_height="wrap_content"
-        android:id="@+id/editText2"
-        android:layout_marginLeft="5dp"
+        android:id="@+id/inputUnit"
+        android:layout_marginLeft="3dp"
         android:layout_marginStart="0dp"
         android:layout_alignBaseline="@+id/editText"
         android:layout_alignBottom="@+id/editText"
@@ -37,4 +37,5 @@
         android:layout_toEndOf="@+id/editText"
         android:hint="Unit"
         android:editable="true" />
+
 </LinearLayout>

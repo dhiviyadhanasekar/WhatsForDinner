@@ -1,16 +1,20 @@
 package com.wearable.whatsfordinner;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by Dhiviya on 9/14/2016.
  */
 public class DataHolder {
 
-    private static Map<String,String> ingredientNames = new HashMap<String, String>();
+    private static Map<String,Boolean> ingredientNames = new HashMap<String, Boolean>();
     private static Map<String, DataRecipie> recipieNames = new HashMap<String, DataRecipie>();
 //    private static List<DataRecipie> recipies = new ArrayList<DataRecipie>();
     {
@@ -33,7 +37,25 @@ public class DataHolder {
 
     public DataRecipie getRecipie(String recipieName){
         recipieName = recipieName.toLowerCase();
-        if(recipieNames.containsKey(recipieName)) recipieNames.get(recipieName);
+        if(recipieNames.containsKey(recipieName)) return recipieNames.get(recipieName);
         return null;
+    }
+
+    public void printRecipies(){
+        Object[] rNames = recipieNames.keySet().toArray();
+        for(int i=0; i<rNames.length; i++) {
+            Log.v("DataHolder", "recipie => " + rNames[i]);
+        }
+    }
+
+    public void saveRecipie(DataRecipie r){
+        recipieNames.put(r.getRecipieName().toLowerCase(), r);
+//        printRecipies();
+    }
+
+    public void addNewIngredient(String newIngredient){
+        newIngredient = newIngredient.toLowerCase();
+        if(ingredientNames.containsKey(newIngredient)) return;
+        ingredientNames.put(newIngredient, true);
     }
 }

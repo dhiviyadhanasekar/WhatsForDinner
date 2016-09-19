@@ -19,6 +19,8 @@ import android.widget.ListView;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class NewDishActivity extends AppCompatActivity {
 
     private static final int imageID = 1;
@@ -28,10 +30,7 @@ public class NewDishActivity extends AppCompatActivity {
 
     DataHolder dataInstance = DataHolder.getInstance();
     private DataRecipie recipie = new DataRecipie();
-
-//    private ListView lv;
-//    ArrayAdapter<String> adapter;
-//    EditText inputSearch;
+    private ArrayList<View> ingredientViews = new ArrayList<View>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +53,7 @@ public class NewDishActivity extends AppCompatActivity {
         int ingredientInputRowId = getResources().getIdentifier("ingredient_input_row" + i,
                 "id", getPackageName());
         View v = findViewById(ingredientInputRowId);
+        ingredientViews.add(v);
         final ListView lv = (ListView) v.findViewById(R.id.list_view);
         lv.setVisibility(View.GONE);
         final EditText inputSearch = (EditText) v.findViewById(R.id.inputSearch);
@@ -62,7 +62,7 @@ public class NewDishActivity extends AppCompatActivity {
         showIngredientsButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                Log.v("Lv visiility", lv.isShown() + "");
+                Log.v("Lv visiility", lv.isShown() + " = " + v);
                 lv.setVisibility(lv.isShown() == true ? View.GONE : View.VISIBLE);
                 if(lv.isShown()) {
                     lv.getLayoutParams().height = (int) getResources().getDimension(R.dimen.recipieImageView_height);
@@ -83,9 +83,9 @@ public class NewDishActivity extends AppCompatActivity {
         });
     }
 
+    //Src: https://www.youtube.com/watch?v=8nDKwtTcOUg
     public void addRecipieImage(View view){
         Log.v("addRecipieImage", "");
-        //Src: https://www.youtube.com/watch?v=8nDKwtTcOUg
         Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(galleryIntent, imageID);
     }
@@ -130,6 +130,49 @@ public class NewDishActivity extends AppCompatActivity {
             default:
                 break;
         }
+    }
+
+    public void createToast(String content){
+        Toast toast = Toast.makeText(getApplicationContext(), content, Toast.LENGTH_SHORT);
+        toast.show();
+    }
+    public void saveRecipie(View v){
+        v.setEnabled(false);
+        EditText recipieEditText = (EditText) findViewById(R.id.recipeNameEditText);
+        String recipieName = recipieEditText.getText().toString();
+        if(recipieName.length() == 0){
+            createToast("Enter a recipie name");
+            v.setEnabled(true);
+            return;
+        }
+
+        ArrayList<DataIngredient> inList = new ArrayList<>();
+        for(int i=0; i<ingredientViews.size(); i++){
+            View inView = ingredientViews.get(i);
+            String inName = ((EditText) inView.findViewById(R.id.inputSearch)).getText().toString();
+            if(inName.length() == 0) continue;
+            String inQtyStr = ((EditText) inView.findViewById(R.id.inputQty)).getText().toString();
+            float inQty = inQtyStr.length() == 0 ? 0 : Float.valueOf( inQtyStr );
+            String inUnit = ((EditText) inView.findViewById(R.id.inputUnit)).getText().toString();
+            DataIngredient in = new DataIngredient(inName, inQty, inUnit);
+            DataHolder.getInstance().addNewIngredient(inName);
+            inList.add(new DataIngredient(inName, inQty, inUnit));
+        }
+        recipie.setIngredients(inList);
+
+        String saveMessage = "Recipie " + recipieName ;
+        if(dataInstance.recipieExists(recipieName)){
+            saveMessage += " saved";
+        } else{
+            saveMessage += " updated";
+        }
+        recipie.setRecipieName(recipieName);
+        String ins = ((EditText) findViewById(R.id.recipieInstructionsEditText)).getText().toString();
+        recipie.setInstructions(ins);
+        dataInstance.saveRecipie(recipie);
+
+        createToast(saveMessage);
+        v.setEnabled(true);
     }
 }
 
