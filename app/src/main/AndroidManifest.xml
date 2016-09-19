@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.wearable.whatsfordinner">
 
-
+    <uses-sdk android:minSdkVersion="11" android:targetSdkVersion="21" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
@@ -19,8 +19,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".NewDishActivity" ></activity>
-        <activity android:name=".MealsActivity"></activity>
+        <activity android:name=".NewDishActivity" />
+        <activity android:name=".MealsActivity" />
+        <activity android:name=".RecipiesActivity"></activity>
     </application>
 
 </manifest>

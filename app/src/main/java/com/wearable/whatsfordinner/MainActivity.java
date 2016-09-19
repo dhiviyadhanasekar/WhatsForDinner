@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void showRecipies(View view){
-
+        startActivity(new Intent(MainActivity.this, RecipiesActivity.class));
     }
 
     public void showAddNewDish(View view){
