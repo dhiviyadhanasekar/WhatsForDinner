@@ -66,6 +66,7 @@ public class DataHolder {
     }
 
     public String[] getAllIngredients(){
-        return (String[]) ingredientNames.keySet().toArray();
+        Set keys = ingredientNames.keySet();
+        return (String[]) keys.toArray(new String[keys.size()]);
     }
 }

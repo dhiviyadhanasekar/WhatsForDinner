@@ -35,7 +35,7 @@ public class RecipiesActivity extends AppCompatActivity {
         fragmentTransaction.commit();
 
         lv = (ListView) findViewById(R.id.recipiesListView);
-        final String[] products = {"abc", "pqwerwr"};//DataHolder.getInstance().getAllRecipies();
+        final String products[] = DataHolder.getInstance().getAllRecipies();
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.list_item, R.id.list_item, products);//{
 //            @Override
 //            public View getView(int position, View convertView, ViewGroup parent){

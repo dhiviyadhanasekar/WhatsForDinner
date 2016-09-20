@@ -12,22 +12,16 @@
 
 
     <fragment
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:name="com.wearable.whatsfordinner.RecipiesPortraitFragment"
         android:id="@+id/fragment"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="32dp"
-        android:layout_marginStart="32dp"
         tools:layout="@layout/fragment_recipies_portrait" />
 
     <fragment
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:name="com.wearable.whatsfordinner.RecipiesLandscapeFragment"
         android:id="@+id/fragment2"
-        android:layout_marginTop="26dp"
         tools:layout="@layout/fragment_recipies_landscape" />
 </LinearLayout>
