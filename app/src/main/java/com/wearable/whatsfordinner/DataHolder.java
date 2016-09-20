@@ -58,4 +58,14 @@ public class DataHolder {
         if(ingredientNames.containsKey(newIngredient)) return;
         ingredientNames.put(newIngredient, true);
     }
+
+    public String[] getAllRecipies(){
+        Set keys = recipieNames.keySet();
+        String[] retValue = (String[]) keys.toArray(new String[keys.size()]);
+        return retValue;
+    }
+
+    public String[] getAllIngredients(){
+        return (String[]) ingredientNames.keySet().toArray();
+    }
 }

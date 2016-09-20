@@ -27,9 +27,8 @@ public class NewDishActivity extends AppCompatActivity {
     private static final int PERMISSION_READ_MEDIA = 2;
 
     ImageView recipieImageView = null;
-
     DataHolder dataInstance = DataHolder.getInstance();
-    private DataRecipie recipie = new DataRecipie();
+    private DataRecipie recipie = null;//new DataRecipie();
     private ArrayList<View> ingredientViews = new ArrayList<View>();
 
     @Override
@@ -39,11 +38,12 @@ public class NewDishActivity extends AppCompatActivity {
 
 //        final EditText recipeNameEditText = (EditText) findViewById(R.id.recipeNameEditText);
         recipieImageView = (ImageView) findViewById(R.id.recipie_photo);
-
+        recipie = new DataRecipie();
         // Listview Data
-        final String products[] = {"Dell Inspiron", "HTC One X", "HTC Wildfire S", "HTC Sense", "HTC Sensation XE",
-                "iPhone 4S", "Samsung Galaxy Note 800",
-                "Samsung Galaxy S3", "MacBook Air", "Mac Mini", "MacBook Pro"};
+        final String products[] = dataInstance.getAllIngredients();
+//        final String products[] = {"Dell Inspiron", "HTC One X", "HTC Wildfire S", "HTC Sense", "HTC Sensation XE",
+//                "iPhone 4S", "Samsung Galaxy Note 800",
+//                "Samsung Galaxy S3", "MacBook Air", "Mac Mini", "MacBook Pro"};
         for(int i=1; i<DataConstants.MAX_INGREDIENT_COUNT+1; i++) {
             initIngredientView(products, i);
         }
