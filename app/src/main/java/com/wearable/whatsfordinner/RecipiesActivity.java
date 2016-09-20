@@ -6,8 +6,16 @@ import android.app.FragmentTransaction;
 import android.content.res.Configuration;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+
 
 public class RecipiesActivity extends AppCompatActivity {
+
+    private ListView lv = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,13 +27,39 @@ public class RecipiesActivity extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         Fragment contentFragment = null;
         if(config.orientation == Configuration.ORIENTATION_LANDSCAPE){
-//            RecipiesLandscapeFragment contentFragment = new RecipiesLandscapeFragment();
             contentFragment = new RecipiesLandscapeFragment();
-//            fragmentTransaction.replace(android.R.id.content, contentFragment);
         } else {
             contentFragment = new RecipiesPortraitFragment();
         }
         fragmentTransaction.replace(android.R.id.content, contentFragment);
         fragmentTransaction.commit();
+
+        lv = (ListView) findViewById(R.id.recipiesListView);
+        final String[] products = {"abc", "pqwerwr"};//DataHolder.getInstance().getAllRecipies();
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.list_item, R.id.list_item, products);//{
+//            @Override
+//            public View getView(int position, View convertView, ViewGroup parent){
+//                View view = super.getView(position,convertView,parent);
+//                if(position %2 == 1)
+//                {
+//                    // Set a background color for ListView regular row/item
+//                    view.setBackgroundColor(Color.parseColor("#FFB6B546"));
+//                }
+//                else
+//                {
+//                    // Set the background color for alternate row/item
+//                    view.setBackgroundColor(Color.parseColor("#FFCCCB4C"));
+//                }
+//                return view;
+//            }
+//        };
+        lv.setAdapter(adapter);
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> arg0, View arg1, int pos,
+                                    long arg3) {
+//                Toast.makeText(getApplicationContext(),"hiihih",Toast.LENGTH_SHORT).show();
+                Log.v("onclick list it ", products[pos]);
+            }
+        });
     }
 }
