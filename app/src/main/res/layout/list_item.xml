@@ -8,10 +8,12 @@
 
     <!-- Product Name -->
     <TextView android:id="@+id/list_item"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dip"
         android:textSize="16dip"
-        android:textStyle="bold"/>
+        android:textStyle="bold"
+        android:autoText="false"
+        android:capitalize="words" />
 
 </LinearLayout>

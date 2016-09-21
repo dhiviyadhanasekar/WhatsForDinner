@@ -14,6 +14,7 @@ import java.util.Set;
  */
 public class DataHolder {
 
+    private static Map<String, Integer> recipiesForMealPlan = new HashMap<>();
     private static Map<String,Boolean> ingredientNames = new HashMap<String, Boolean>();
     private static Map<String, DataRecipie> recipieNames = new HashMap<String, DataRecipie>();
 //    private static List<DataRecipie> recipies = new ArrayList<DataRecipie>();
@@ -25,8 +26,17 @@ public class DataHolder {
     public static DataHolder getInstance() {return holder;}
 
     private static void populateDummyRecipies() {
-        DataRecipie hamburger = new DataRecipie();
-        recipieNames.put("ham", hamburger);
+        DataRecipie bananaBread = new DataRecipie();
+        List<DataIngredient> bananaBreadIn = new ArrayList<>();
+        bananaBreadIn.add(new DataIngredient("bread", 1, "loaf"));
+        bananaBread.setIngredients( ( List<DataIngredient>) bananaBreadIn);
+        bananaBread.setRecipieName("banana bread");
+        bananaBread.setInstructions("Cream together butter and sugar."
+        +"\\nAdd eggs and crushed bananas.\\nCombine well.\\nSift together flour, soda and salt."+
+                " Add to creamed mixture. Add vanilla.\\nPour into greased and floured loaf pan."+
+                "\\nBake at 350 degrees for 60 minutes.\\nKeeps well, refrigerated.");
+        recipieNames.put("banana bread", bananaBread);
+        recipieNames.put("eggs", new DataRecipie());
     }
 
     public boolean recipieExists(String newRecipieName){

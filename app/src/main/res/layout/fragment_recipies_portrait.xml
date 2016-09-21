@@ -1,38 +1,46 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.wearable.whatsfordinner.RecipiesPortraitFragment"
-    android:textAlignment="center">
+    android:textAlignment="center"
+    android:orientation="vertical">
 
     <!-- TODO: Update blank fragment layout -->
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:padding="15dp"
-        android:gravity="center">
-        <!--android:background="@color/abc_primary_text_disable_only_material_dark"-->
+        android:layout_height="70dp"
+        android:padding="10dp"
+        android:id="@+id/linearLayout3"
+        android:weightSum="1"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:textAlignment="center">
 
 
-        <!--<ImageView-->
-            <!--android:layout_width="50dp"-->
-            <!--android:layout_height="40dp"-->
-            <!--android:id="@+id/imageView5"-->
-            <!--android:src="@drawable/ic_book"-->
-            <!--android:layout_marginLeft="65dp" />-->
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="40dp"
+            android:id="@+id/imageView5"
+            android:src="@drawable/ic_recipies"
+            android:layout_weight="0.25" />
+
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Recipes"
+            android:text="@string/recipes"
             android:id="@+id/textView13"
-            android:layout_marginLeft="40dp"
-            android:textColor="@color/abc_background_cache_hint_selector_material_dark" />
+            android:layout_marginLeft="0dp"
+            android:textColor="@color/black"
+            android:paddingTop="5dp" />
 
     </LinearLayout>
 
-    <include layout="@layout/recipies_list_view" android:id="@+id/recipiesListView"/>
+    <include layout="@layout/recipies_list_view" android:id="@+id/recipiesListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
 
-</RelativeLayout>
+</LinearLayout>
