@@ -13,7 +13,6 @@
         android:padding="10dip"
         android:textSize="16dip"
         android:textStyle="bold"
-        android:autoText="false"
-        android:capitalize="words" />
+        android:autoText="false" />
 
 </LinearLayout>

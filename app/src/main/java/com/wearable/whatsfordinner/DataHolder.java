@@ -18,7 +18,7 @@ public class DataHolder {
     private static Map<String,Boolean> ingredientNames = new HashMap<String, Boolean>();
     private static Map<String, DataRecipie> recipieNames = new HashMap<String, DataRecipie>();
 //    private static List<DataRecipie> recipies = new ArrayList<DataRecipie>();
-    {
+    static {
         populateDummyRecipies();
     }
 
@@ -37,6 +37,7 @@ public class DataHolder {
                 "\\nBake at 350 degrees for 60 minutes.\\nKeeps well, refrigerated.");
         recipieNames.put("banana bread", bananaBread);
         recipieNames.put("eggs", new DataRecipie());
+        ingredientNames.put("bread", true);
     }
 
     public boolean recipieExists(String newRecipieName){

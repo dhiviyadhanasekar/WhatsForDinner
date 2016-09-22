@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Sujan on 9/14/2016.
+ * Created by Dhiviya on 9/14/2016.
  */
 public class DataRecipie {
     private List<DataIngredient> ingredients = new ArrayList<DataIngredient>();
