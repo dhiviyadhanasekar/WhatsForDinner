@@ -6,4 +6,5 @@
     android:id="@+id/recipiesListView"
     android:layout_gravity="left|center_vertical"
     android:smoothScrollbar="true"
-    android:scrollIndicators="right" />
+    android:scrollIndicators="right"
+    android:background="@drawable/text_view_border"/>

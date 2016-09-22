@@ -47,6 +47,7 @@
         android:textFilterEnabled="false"
         android:nestedScrollingEnabled="true"
         android:minHeight="400dp"
-        android:visibility="gone" />
+        android:visibility="gone"
+        android:background="@drawable/text_view_border"/>
 
 </LinearLayout>

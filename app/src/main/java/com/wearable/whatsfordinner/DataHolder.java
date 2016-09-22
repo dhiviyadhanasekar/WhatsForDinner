@@ -14,7 +14,11 @@ import java.util.Set;
  */
 public class DataHolder {
 
+    //recipies screen data
     private static Map<String, Integer> recipiesForMealPlan = new HashMap<>();
+
+
+    //add dish screen data
     private static Map<String,Boolean> ingredientNames = new HashMap<String, Boolean>();
     private static Map<String, DataRecipie> recipieNames = new HashMap<String, DataRecipie>();
 //    private static List<DataRecipie> recipies = new ArrayList<DataRecipie>();

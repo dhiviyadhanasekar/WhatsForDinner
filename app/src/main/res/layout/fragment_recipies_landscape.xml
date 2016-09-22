@@ -11,9 +11,13 @@
             android:layout_width="164dp"
             android:layout_height="match_parent" />
 
-        <ScrollView
+    <!--<RelativeLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"></RelativeLayout>-->
+
+    <ScrollView
             android:layout_width="428dp"
-            android:layout_height="fill_parent"
+            android:layout_height="match_parent"
             android:padding="10dp">
 
             <RelativeLayout
@@ -21,6 +25,12 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center_horizontal|top">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Ingredient Name"
+                    android:id="@+id/ingredient_name" />
             </RelativeLayout>
         </ScrollView>
 

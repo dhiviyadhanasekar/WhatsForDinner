@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 
 /**
@@ -18,7 +19,9 @@ import android.widget.ListView;
  */
 public class RecipiesLandscapeFragment extends Fragment {
 
-    private ListView lv = null;
+    private ListView lv ;
+    int lastClickedPos = 0;
+
     public RecipiesLandscapeFragment() {
         // Required empty public constructor
     }
@@ -31,6 +34,7 @@ public class RecipiesLandscapeFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_recipies_landscape, container, false);
     }
 
+    @Override
     public void onViewCreated(View v, Bundle savedInstanceState) {
         super.onViewCreated(v, savedInstanceState);
         lv = (ListView) v.findViewById(R.id.recipiesListView);
@@ -39,25 +43,36 @@ public class RecipiesLandscapeFragment extends Fragment {
             @Override
             public View getView(int position, View convertView, ViewGroup parent){
                 View view = super.getView(position,convertView,parent);
-                if(position %2 == 1) {
-                    // Set a background color for ListView regular row/item
-                    view.setBackgroundColor(Color.parseColor("#E0E0E0"));
-
-                } else {
-                    // Set the background color for alternate row/item
-                    view.setBackgroundColor(Color.parseColor("#FFFFFF"));
-                }
+                view.setBackgroundColor(getColorForRowPos(position));
                 return view;
             }
         };
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> arg0, View arg1, int pos,
+            @Override
+            public void onItemClick(AdapterView<?> parent, View convertView, int pos,
                                     long arg3) {
 //                Toast.makeText(getApplicationContext(),"hiihih",Toast.LENGTH_SHORT).show();
+//                if(lastClickedPos != -1){
+                parent.getChildAt(lastClickedPos).setBackgroundColor(getColorForRowPos(pos));
+//                }
+                lastClickedPos = pos;
+                parent.getChildAt(pos).setBackgroundColor(Color.parseColor("#33E0FF"));
                 Log.v("onclick list it ", products[pos]);
+//                DataHolder.getInstance().addToMealPlan(products[pos]);
+//                Toast.makeText(getActivity().getApplicationContext(),products[pos] +" added to the meal plan", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
+    private int getColorForRowPos(int pos){
+        if(pos %2 == 1) {
+            // Set a background color for ListView regular row/item
+            return Color.parseColor("#E0E0E0");
+
+        } else {
+            // Set the background color for alternate row/item
+            return Color.parseColor("#FFFFFF");
+        }
+    }
 }
