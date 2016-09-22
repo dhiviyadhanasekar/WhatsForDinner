@@ -79,4 +79,14 @@ public class DataHolder {
         Set keys = ingredientNames.keySet();
         return (String[]) keys.toArray(new String[keys.size()]);
     }
+
+    public void addToMealPlan(String recipieName){
+        recipieName = recipieName.toLowerCase();
+        Integer val = recipiesForMealPlan.get(recipieName);
+        if(val == null){
+            recipiesForMealPlan.put(recipieName, 1);
+        } else {
+            recipiesForMealPlan.put(recipieName, val+1);
+        }
+    }
 }

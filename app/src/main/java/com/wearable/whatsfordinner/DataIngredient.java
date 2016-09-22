@@ -1,7 +1,7 @@
 package com.wearable.whatsfordinner;
 
 /**
- * Created by Sujan on 9/14/2016.
+ * Created by Dhiviya on 9/14/2016.
  */
 public class DataIngredient {
     private String name;
