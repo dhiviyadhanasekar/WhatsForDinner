@@ -29,8 +29,86 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="Ingredient Name"
-                    android:id="@+id/ingredient_name" />
+                    android:text="Recipie Name"
+                    android:id="@+id/recipie_name" />
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/recipie_name"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true">
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <ImageView
+                            android:layout_width="@dimen/recipieImageView_width"
+                            android:layout_height="@dimen/recipieImageView_height"
+                            android:id="@+id/recipie_photo"
+                            android:layout_below="@+id/recipie_name"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true"
+                            android:src="@drawable/ic_default_recipie"
+                            android:layout_marginTop="5dp" />
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginLeft="20dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:text="Ingredients:"
+                                android:id="@+id/textView14"
+                                android:layout_alignTop="@+id/recipie_photo"
+                                android:layout_centerHorizontal="true"
+                                android:textColor="@color/black" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:text="* abc (1) \n * pqr (2 lbs) "
+                                android:id="@+id/ingredient_list"
+                                android:layout_centerVertical="true"
+                                android:layout_alignLeft="@+id/textView14"
+                                android:layout_alignStart="@+id/textView14"
+                                android:layout_marginTop="5dp" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:text="Directions:"
+                        android:id="@+id/textView15"
+                        android:layout_gravity="center_vertical"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginTop="15dp"
+                        android:textColor="@color/black" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:text="Small Text"
+                        android:id="@+id/recipie_directions"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginTop="5dp" />
+                </LinearLayout>
+
             </RelativeLayout>
         </ScrollView>
 

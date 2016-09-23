@@ -36,12 +36,21 @@ public class DataHolder {
         bananaBread.setIngredients( ( List<DataIngredient>) bananaBreadIn);
         bananaBread.setRecipieName("banana bread");
         bananaBread.setInstructions("Cream together butter and sugar."
-        +"\\nAdd eggs and crushed bananas.\\nCombine well.\\nSift together flour, soda and salt."+
-                " Add to creamed mixture. Add vanilla.\\nPour into greased and floured loaf pan."+
-                "\\nBake at 350 degrees for 60 minutes.\\nKeeps well, refrigerated.");
+        +"\nAdd eggs and crushed bananas.\nCombine well.\nSift together flour, soda and salt."+
+                " Add to creamed mixture. Add vanilla.\nPour into greased and floured loaf pan."+
+                "\nBake at 350 degrees for 60 minutes.\nKeeps well, refrigerated.");
         recipieNames.put("banana bread", bananaBread);
-        recipieNames.put("eggs", new DataRecipie());
         ingredientNames.put("bread", true);
+
+        DataRecipie eggsToast = new DataRecipie();
+        List<DataIngredient> eggsToastIn = new ArrayList<>();
+        eggsToastIn.add(new DataIngredient("eggs", 5, ""));
+        eggsToastIn.add(new DataIngredient("bread", 1, "loaf"));
+        eggsToast.setIngredients( ( List<DataIngredient>) eggsToastIn);
+        eggsToast.setRecipieName("eggs toast");
+        eggsToast.setInstructions("Mix eggs and put them over bread. toast the bread now. ");
+        recipieNames.put("eggs toast", eggsToast);
+        ingredientNames.put("eggs", true);
     }
 
     public boolean recipieExists(String newRecipieName){

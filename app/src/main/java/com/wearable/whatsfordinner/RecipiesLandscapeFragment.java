@@ -2,6 +2,7 @@ package com.wearable.whatsfordinner;
 
 
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.util.Log;
@@ -10,8 +11,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.Toast;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 
 /**
@@ -20,6 +24,7 @@ import android.widget.Toast;
 public class RecipiesLandscapeFragment extends Fragment {
 
     private ListView lv ;
+    View fragmentView;
     int lastClickedPos = 0;
 
     public RecipiesLandscapeFragment() {
@@ -37,13 +42,16 @@ public class RecipiesLandscapeFragment extends Fragment {
     @Override
     public void onViewCreated(View v, Bundle savedInstanceState) {
         super.onViewCreated(v, savedInstanceState);
+        fragmentView = v;
         lv = (ListView) v.findViewById(R.id.recipiesListView);
         final String products[] = DataHolder.getInstance().getAllRecipies();
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), R.layout.list_item, R.id.list_item, products){
             @Override
             public View getView(int position, View convertView, ViewGroup parent){
                 View view = super.getView(position,convertView,parent);
-                view.setBackgroundColor(getColorForRowPos(position));
+                if(position == lastClickedPos){
+                    view.setBackgroundColor(Color.parseColor("#33E0FF"));
+                } else view.setBackgroundColor(getColorForRowPos(position));
                 return view;
             }
         };
@@ -52,17 +60,47 @@ public class RecipiesLandscapeFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View convertView, int pos,
                                     long arg3) {
-//                Toast.makeText(getApplicationContext(),"hiihih",Toast.LENGTH_SHORT).show();
-//                if(lastClickedPos != -1){
                 parent.getChildAt(lastClickedPos).setBackgroundColor(getColorForRowPos(pos));
-//                }
-                lastClickedPos = pos;
                 parent.getChildAt(pos).setBackgroundColor(Color.parseColor("#33E0FF"));
+                lastClickedPos = pos;
                 Log.v("onclick list it ", products[pos]);
-//                DataHolder.getInstance().addToMealPlan(products[pos]);
-//                Toast.makeText(getActivity().getApplicationContext(),products[pos] +" added to the meal plan", Toast.LENGTH_SHORT).show();
+                loadRecipie(DataHolder.getInstance().getRecipie(products[pos]));
+
             }
         });
+        loadRecipie(DataHolder.getInstance().getRecipie(products[lastClickedPos]));
+    }
+
+    private void loadRecipie(DataRecipie selectedRecipie){
+        TextView recipieNameTxtView = (TextView) fragmentView.findViewById(R.id.recipie_name);
+        recipieNameTxtView.setText(selectedRecipie.getRecipieName());
+
+        TextView ingredientListTxtView = (TextView) fragmentView.findViewById(R.id.ingredient_list);
+        StringBuffer ingredientListStr = new StringBuffer("");
+        for(int i=0; i<selectedRecipie.getIngredients().size(); i++){
+            DataIngredient in = selectedRecipie.getIngredients().get(i);
+            ingredientListStr.append("* ");
+            ingredientListStr.append(in.getName());
+            ingredientListStr.append(" ");
+            ingredientListStr.append("(");
+            ingredientListStr.append(in.getQuantity());
+            ingredientListStr.append(" ");
+            ingredientListStr.append(in.getUnit());
+            ingredientListStr.append(") \n");
+        }
+        ingredientListTxtView.setText(ingredientListStr.toString());
+
+        ImageView recipieImageView = (ImageView) fragmentView.findViewById(R.id.recipie_photo);
+        if(selectedRecipie.getImageUri() == null){
+            recipieImageView.setImageResource(R.drawable.ic_default_recipie);
+        } else {
+            recipieImageView.setImageURI(selectedRecipie.getImageUri());
+        }
+        recipieImageView.getLayoutParams().height = (int) getResources().getDimension(R.dimen.recipieImageView_height);
+        recipieImageView.getLayoutParams().width = (int) getResources().getDimension(R.dimen.recipieImageView_width);
+
+        TextView recipieDescription  = (TextView) fragmentView.findViewById(R.id.recipie_directions);
+        recipieDescription.setText(selectedRecipie.getInstructions());
     }
 
     private int getColorForRowPos(int pos){
