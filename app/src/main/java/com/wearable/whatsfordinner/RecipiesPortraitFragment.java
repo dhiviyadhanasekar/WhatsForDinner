@@ -1,6 +1,7 @@
 package com.wearable.whatsfordinner;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
@@ -59,7 +60,17 @@ public class RecipiesPortraitFragment extends Fragment {
                 parent.getChildAt(pos).setBackgroundColor(Color.parseColor("#33E0FF"));
                 Log.v("onclick list it ", products[pos]);
                 DataHolder.getInstance().addToMealPlan(products[pos]);
-                Toast.makeText(getActivity().getApplicationContext(),products[pos] +" added to the meal plan", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity().getApplicationContext(), products[pos] +" added to the meal plan", Toast.LENGTH_SHORT).show();
+            }
+        });
+        lv.setLongClickable(true);
+        lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            public boolean onItemLongClick(AdapterView<?> parent, View v, int position, long id) {
+                //Do some
+                Intent editModeActivity = new Intent(getActivity().getApplicationContext(), NewDishActivity.class);
+                editModeActivity.putExtra("recipieName", products[position]);
+                startActivity(editModeActivity);
+                return true;
             }
         });
     }

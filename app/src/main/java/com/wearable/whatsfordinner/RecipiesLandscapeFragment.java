@@ -1,6 +1,7 @@
 package com.wearable.whatsfordinner;
 
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -69,6 +70,16 @@ public class RecipiesLandscapeFragment extends Fragment {
             }
         });
         loadRecipie(DataHolder.getInstance().getRecipie(products[lastClickedPos]));
+        lv.setLongClickable(true);
+        lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            public boolean onItemLongClick(AdapterView<?> parent, View v, int position, long id) {
+                //Do some
+                Intent editModeActivity = new Intent(getActivity().getApplicationContext(), NewDishActivity.class);
+                editModeActivity.putExtra("recipieName", products[position]);
+                startActivity(editModeActivity);
+                return true;
+            }
+        });
     }
 
     private void loadRecipie(DataRecipie selectedRecipie){

@@ -45,4 +45,16 @@ public class DataRecipie {
         this.imageUri = imageUri;
     }
     public void setInstructions(String instructions){ this.instructions = instructions; }
+    public DataRecipie getClone(){
+        DataRecipie rClone = new DataRecipie();
+        rClone.setRecipieName(this.getRecipieName());
+        rClone.setInstructions(this.getInstructions());
+        rClone.setImageUri(this.getImageUri());
+        ArrayList<DataIngredient> inList = new ArrayList<>();
+        for(int i=0; i<this.getIngredients().size(); i++){
+            inList.add(this.getIngredients().get(i).getClone());
+        }
+        rClone.setIngredients(inList);
+        return rClone;
+    }
 }

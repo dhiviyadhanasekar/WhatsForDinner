@@ -20,6 +20,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class NewDishActivity extends AppCompatActivity {
 
@@ -36,20 +37,37 @@ public class NewDishActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_dish);
 
-//        final EditText recipeNameEditText = (EditText) findViewById(R.id.recipeNameEditText);
+        Intent intent = getIntent();
+        if(intent.hasExtra("recipieName")){
+            String rName = intent.getStringExtra("recipieName");
+            recipie = dataInstance.getRecipie(rName).getClone();
+        } else recipie = new DataRecipie();
+
+        EditText recipeNameEditText = (EditText) findViewById(R.id.recipeNameEditText);
+        recipeNameEditText.setText(recipie.getRecipieName());
+        recipeNameEditText = (EditText) findViewById(R.id.recipieInstructionsEditText);
+        recipeNameEditText.setText(recipie.getInstructions());
+
         recipieImageView = (ImageView) findViewById(R.id.recipie_photo);
-        recipie = new DataRecipie();
+        if(recipie.getImageUri() == null){
+            recipieImageView.setImageResource(R.drawable.ic_default_recipie);
+        } else {
+            recipieImageView.setImageURI(recipie.getImageUri());
+        }
+
         // Listview Data
         final String products[] = dataInstance.getAllIngredients();
 //        final String products[] = {"Dell Inspiron", "HTC One X", "HTC Wildfire S", "HTC Sense", "HTC Sensation XE",
 //                "iPhone 4S", "Samsung Galaxy Note 800",
 //                "Samsung Galaxy S3", "MacBook Air", "Mac Mini", "MacBook Pro"};
+        List<DataIngredient> recipieIns = recipie.getIngredients();
         for(int i=1; i<DataConstants.MAX_INGREDIENT_COUNT+1; i++) {
-            initIngredientView(products, i);
+            DataIngredient inToSet = (i<=recipieIns.size()) ? recipieIns.get(i-1) : null;
+            initIngredientView(products, i, inToSet);
         }
     }
 
-    private void initIngredientView(final String[] products, final int i) {
+    private void initIngredientView(final String[] products, final int i, DataIngredient inToSet) {
         int ingredientInputRowId = getResources().getIdentifier("ingredient_input_row" + i,
                 "id", getPackageName());
         View v = findViewById(ingredientInputRowId);
@@ -57,6 +75,13 @@ public class NewDishActivity extends AppCompatActivity {
         final ListView lv = (ListView) v.findViewById(R.id.list_view);
         lv.setVisibility(View.GONE);
         final EditText inputSearch = (EditText) v.findViewById(R.id.inputSearch);
+        if(inToSet != null){
+            inputSearch.setText(inToSet.getName());
+            EditText qtyEditText = (EditText) v.findViewById(R.id.inputQty);
+            qtyEditText.setText(inToSet.getQuantity() + "");
+            qtyEditText =  (EditText) v.findViewById(R.id.inputUnit);
+            qtyEditText.setText(inToSet.getUnit());
+        }
         ImageButton showIngredientsButton = (ImageButton) v.findViewById(R.id.showIngredientsButton);
 
         showIngredientsButton.setOnClickListener(new View.OnClickListener(){
