@@ -1,6 +1,8 @@
 package com.wearable.whatsfordinner;
 
 import android.content.Context;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.widget.BaseAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -9,12 +11,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import java.util.ArrayList;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 /**
  * Created by Dhiviya on 9/25/2016.
  */
 public class GroceriesListAdapter extends BaseAdapter implements ListAdapter {
     private DataIngredient[] list ;
+    float _xSwipe1, _xSwipe2;
     private Context context;
 
 
@@ -40,6 +44,7 @@ public class GroceriesListAdapter extends BaseAdapter implements ListAdapter {
         //just return 0 if your list items do not have an Id variable.
     }
 
+
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         View view = convertView;
@@ -52,6 +57,7 @@ public class GroceriesListAdapter extends BaseAdapter implements ListAdapter {
         TextView listItemText = (TextView)view.findViewById(R.id.list_item);
         listItemText.setText(list[position].getName());
         view.setBackgroundColor(Utils.getColorForRowPos(position));
+
 
         //Handle buttons and add onClickListeners
 //        Button deleteBtn = (Button)view.findViewById(R.id.delete_btn);
