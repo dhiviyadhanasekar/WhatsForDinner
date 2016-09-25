@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+   >
+
+    <!-- Single ListItem -->
+
+    <!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:orientation="horizontal"-->
+        <!--android:id="@+id/grocery_list_item">-->
+    <!-- Product Name -->
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="32dp"
+        android:layout_height="35dp"
+        android:text="+"
+        android:id="@+id/button2"
+        android:clickable="true" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="32dp"
+        android:layout_height="35dp"
+        android:text="-"
+        android:id="@+id/button3"
+        android:clickable="true" />
+
+    <TextView android:id="@+id/list_item"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dip"
+        android:textSize="16dip"
+        android:textStyle="bold"
+        android:autoText="false" />
+
+    <!--</LinearLayout>-->
+</LinearLayout>
