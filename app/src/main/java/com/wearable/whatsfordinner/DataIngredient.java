@@ -29,4 +29,7 @@ public class DataIngredient {
         DataIngredient d = new DataIngredient(this.name, this.quantity, this.unit);
         return d;
     }
+    public void setQuantity(float newQty){
+        this.quantity = newQty;
+    }
 }

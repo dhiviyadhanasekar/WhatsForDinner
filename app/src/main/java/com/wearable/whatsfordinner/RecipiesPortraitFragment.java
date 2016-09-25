@@ -43,7 +43,7 @@ public class RecipiesPortraitFragment extends Fragment {
             @Override
             public View getView(int position, View convertView, ViewGroup parent){
                 View view = super.getView(position,convertView,parent);
-                view.setBackgroundColor(getColorForRowPos(position));
+                view.setBackgroundColor(Utils.getColorForRowPos(position));
                 return view;
             }
         };
@@ -54,7 +54,7 @@ public class RecipiesPortraitFragment extends Fragment {
                                     long arg3) {
 //                Toast.makeText(getApplicationContext(),"hiihih",Toast.LENGTH_SHORT).show();
                 if(lastClickedPos != -1){
-                    parent.getChildAt(lastClickedPos).setBackgroundColor(getColorForRowPos(pos));
+                    parent.getChildAt(lastClickedPos).setBackgroundColor(Utils.getColorForRowPos(pos));
                 }
                 lastClickedPos = pos;
                 parent.getChildAt(pos).setBackgroundColor(Color.parseColor("#33E0FF"));
@@ -75,14 +75,4 @@ public class RecipiesPortraitFragment extends Fragment {
         });
     }
 
-    private int getColorForRowPos(int pos){
-        if(pos %2 == 1) {
-            // Set a background color for ListView regular row/item
-            return Color.parseColor("#E0E0E0");
-
-        } else {
-            // Set the background color for alternate row/item
-           return Color.parseColor("#FFFFFF");
-        }
-    }
 }

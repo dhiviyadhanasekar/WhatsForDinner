@@ -2,6 +2,7 @@ package com.wearable.whatsfordinner;
 
 import android.util.Log;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -16,6 +17,7 @@ public class DataHolder {
 
     //recipies screen data
     private static Map<String, Integer> recipiesForMealPlan = new HashMap<>();
+    private static Map<String, DataIngredient> groceriesToShop = new HashMap<>();
 
 
     //add dish screen data
@@ -24,15 +26,52 @@ public class DataHolder {
 //    private static List<DataRecipie> recipies = new ArrayList<DataRecipie>();
     static {
         populateDummyRecipies();
+        injectMockDataForTesting();
     }
 
     private static final DataHolder holder = new DataHolder();
     public static DataHolder getInstance() {return holder;}
 
+    public DataIngredient[] getGroceriesToShop(){
+        Set keys = recipiesForMealPlan.keySet();
+        String[] recipiesToAdd = (String[]) keys.toArray(new String[keys.size()]);
+        for(int i=0; i<recipiesToAdd.length; i++){
+            String rName = recipiesToAdd[i];
+            rName = rName.toLowerCase();
+            float rCount =  recipiesForMealPlan.get(rName);
+            DataRecipie dataRecipie = recipieNames.get(rName);
+            for(int j=0; j<dataRecipie.getIngredients().size(); j++){
+                DataIngredient dataIngredient = dataRecipie.getIngredients().get(j);
+                String inName = dataIngredient.getName().toLowerCase();
+                if(groceriesToShop.containsKey(inName)){
+                    DataIngredient groceryIn = groceriesToShop.get(inName);
+                    groceryIn.setQuantity( groceryIn.getQuantity() + rCount*dataIngredient.getQuantity());
+                    groceriesToShop.put(inName, groceryIn );
+                } else {
+                    groceriesToShop.put(inName, dataIngredient.getClone());
+                }
+            }
+        }
+
+//        return groceriesToShop;
+        Set keysGroceries = groceriesToShop.keySet();
+        String[] groceriesToAdd = (String[]) keysGroceries.toArray(new String[keysGroceries.size()]);
+        DataIngredient[] groceriesToDisplay = new DataIngredient[keysGroceries.size()];
+
+        for(int i=0; i<groceriesToAdd.length; i++){
+            groceriesToDisplay[i] = (groceriesToShop.get(groceriesToAdd[i]));
+        }
+        return groceriesToDisplay;
+    }
+
+    private static void injectMockDataForTesting(){
+        recipiesForMealPlan.put("eggs toast", 1);
+        recipiesForMealPlan.put("banana bread", 2);
+    }
     private static void populateDummyRecipies() {
         DataRecipie bananaBread = new DataRecipie();
         List<DataIngredient> bananaBreadIn = new ArrayList<>();
-        bananaBreadIn.add(new DataIngredient("bread", 1, "loaf"));
+        bananaBreadIn.add(new DataIngredient("bread", 1, "loaves"));
         bananaBread.setIngredients( ( List<DataIngredient>) bananaBreadIn);
         bananaBread.setRecipieName("banana bread");
         bananaBread.setInstructions("Cream together butter and sugar."
@@ -44,8 +83,8 @@ public class DataHolder {
 
         DataRecipie eggsToast = new DataRecipie();
         List<DataIngredient> eggsToastIn = new ArrayList<>();
-        eggsToastIn.add(new DataIngredient("eggs", 5, ""));
-        eggsToastIn.add(new DataIngredient("bread", 1, "loaf"));
+        eggsToastIn.add(new DataIngredient("eggs", 5, "eggs"));
+        eggsToastIn.add(new DataIngredient("bread", 1, "loaves"));
         eggsToast.setIngredients( ( List<DataIngredient>) eggsToastIn);
         eggsToast.setRecipieName("eggs toast");
         eggsToast.setInstructions("Mix eggs and put them over bread. toast the bread now. ");

@@ -179,6 +179,7 @@ public class NewDishActivity extends AppCompatActivity {
             String inQtyStr = ((EditText) inView.findViewById(R.id.inputQty)).getText().toString();
             float inQty = inQtyStr.length() == 0 ? 0 : Float.valueOf( inQtyStr );
             String inUnit = ((EditText) inView.findViewById(R.id.inputUnit)).getText().toString();
+//            if(inUnit.length() == 0) inUnit = "pieces";
             DataIngredient in = new DataIngredient(inName, inQty, inUnit);
             DataHolder.getInstance().addNewIngredient(inName);
             inList.add(new DataIngredient(inName, inQty, inUnit));

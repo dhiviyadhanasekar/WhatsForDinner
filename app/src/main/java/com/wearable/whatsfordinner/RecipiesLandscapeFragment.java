@@ -52,7 +52,7 @@ public class RecipiesLandscapeFragment extends Fragment {
                 View view = super.getView(position,convertView,parent);
                 if(position == lastClickedPos){
                     view.setBackgroundColor(Color.parseColor("#33E0FF"));
-                } else view.setBackgroundColor(getColorForRowPos(position));
+                } else view.setBackgroundColor(Utils.getColorForRowPos(position));
                 return view;
             }
         };
@@ -61,7 +61,7 @@ public class RecipiesLandscapeFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View convertView, int pos,
                                     long arg3) {
-                parent.getChildAt(lastClickedPos).setBackgroundColor(getColorForRowPos(pos));
+                parent.getChildAt(lastClickedPos).setBackgroundColor(Utils.getColorForRowPos(pos));
                 parent.getChildAt(pos).setBackgroundColor(Color.parseColor("#33E0FF"));
                 lastClickedPos = pos;
                 Log.v("onclick list it ", products[pos]);
@@ -112,16 +112,5 @@ public class RecipiesLandscapeFragment extends Fragment {
 
         TextView recipieDescription  = (TextView) fragmentView.findViewById(R.id.recipie_directions);
         recipieDescription.setText(selectedRecipie.getInstructions());
-    }
-
-    private int getColorForRowPos(int pos){
-        if(pos %2 == 1) {
-            // Set a background color for ListView regular row/item
-            return Color.parseColor("#E0E0E0");
-
-        } else {
-            // Set the background color for alternate row/item
-            return Color.parseColor("#FFFFFF");
-        }
     }
 }

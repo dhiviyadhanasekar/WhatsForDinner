@@ -52,6 +52,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void showGroceries(View view){
-
+        startActivity(new Intent(MainActivity.this, GroceriesActivity.class));
     }
 }
