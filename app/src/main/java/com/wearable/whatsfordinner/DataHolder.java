@@ -24,34 +24,25 @@ public class DataHolder {
     private static Map<String,Boolean> ingredientNames = new HashMap<String, Boolean>();
     private static Map<String, DataRecipie> recipieNames = new HashMap<String, DataRecipie>();
 //    private static List<DataRecipie> recipies = new ArrayList<DataRecipie>();
-    static {
-        populateDummyRecipies();
-        injectMockDataForTesting();
-    }
+
 
     private static final DataHolder holder = new DataHolder();
     public static DataHolder getInstance() {return holder;}
 
+    static {
+        populateDummyRecipies();
+        holder.injectMockDataForTesting();
+    }
+
     public DataIngredient[] getGroceriesToShop(){
-        Set keys = recipiesForMealPlan.keySet();
-        String[] recipiesToAdd = (String[]) keys.toArray(new String[keys.size()]);
-        for(int i=0; i<recipiesToAdd.length; i++){
-            String rName = recipiesToAdd[i];
-            rName = rName.toLowerCase();
-            float rCount =  recipiesForMealPlan.get(rName);
-            DataRecipie dataRecipie = recipieNames.get(rName);
-            for(int j=0; j<dataRecipie.getIngredients().size(); j++){
-                DataIngredient dataIngredient = dataRecipie.getIngredients().get(j);
-                String inName = dataIngredient.getName().toLowerCase();
-                if(groceriesToShop.containsKey(inName)){
-                    DataIngredient groceryIn = groceriesToShop.get(inName);
-                    groceryIn.setQuantity( groceryIn.getQuantity() + rCount*dataIngredient.getQuantity());
-                    groceriesToShop.put(inName, groceryIn );
-                } else {
-                    groceriesToShop.put(inName, dataIngredient.getClone());
-                }
-            }
-        }
+//        Set keys = recipiesForMealPlan.keySet();
+//        String[] recipiesToAdd = (String[]) keys.toArray(new String[keys.size()]);
+//        for(int i=0; i<recipiesToAdd.length; i++){
+//            String rName = recipiesToAdd[i];
+//            rName = rName.toLowerCase();
+//            float rCount =  recipiesForMealPlan.get(rName);
+//            addRecipieIngredientsToGroceries(rName, rCount);
+//        }
 
 //        return groceriesToShop;
         Set keysGroceries = groceriesToShop.keySet();
@@ -64,10 +55,29 @@ public class DataHolder {
         return groceriesToDisplay;
     }
 
-    private static void injectMockDataForTesting(){
-        recipiesForMealPlan.put("eggs toast", 1);
-        recipiesForMealPlan.put("banana bread", 2);
+    private void addRecipieIngredientsToGroceries(String rName, float rCount) {
+        DataRecipie dataRecipie = recipieNames.get(rName);
+        for(int j=0; j<dataRecipie.getIngredients().size(); j++){
+            DataIngredient dataIngredient = dataRecipie.getIngredients().get(j);
+            String inName = dataIngredient.getName().toLowerCase();
+            if(groceriesToShop.containsKey(inName)){
+                DataIngredient groceryIn = groceriesToShop.get(inName);
+                groceryIn.setQuantity( groceryIn.getQuantity() + rCount*dataIngredient.getQuantity());
+                groceriesToShop.put(inName, groceryIn );
+            } else {
+                groceriesToShop.put(inName, dataIngredient.getClone());
+            }
+        }
     }
+
+    private void injectMockDataForTesting(){
+        addToMealPlan("eggs toast");
+        addToMealPlan("banana bread");
+        addToMealPlan("banana bread");
+//        recipiesForMealPlan.put("eggs toast", 1);
+//        recipiesForMealPlan.put("banana bread", 2);
+    }
+
     private static void populateDummyRecipies() {
         DataRecipie bananaBread = new DataRecipie();
         List<DataIngredient> bananaBreadIn = new ArrayList<>();
@@ -141,5 +151,6 @@ public class DataHolder {
         } else {
             recipiesForMealPlan.put(recipieName, val+1);
         }
+        addRecipieIngredientsToGroceries(recipieName, 1);
     }
 }

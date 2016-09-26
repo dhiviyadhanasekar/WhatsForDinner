@@ -1,7 +1,9 @@
 package com.wearable.whatsfordinner;
 
 import android.content.Context;
+import android.text.Layout;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.widget.BaseAdapter;
 import android.widget.ListAdapter;
@@ -17,15 +19,16 @@ import android.widget.Toast;
  * Created by Dhiviya on 9/25/2016.
  */
 public class GroceriesListAdapter extends BaseAdapter implements ListAdapter {
-    private DataIngredient[] list ;
+    DataIngredient[] list ;
     float _xSwipe1, _xSwipe2;
     private Context context;
-
+//    GestureDetector gestureDetector;
 
 
     public GroceriesListAdapter(DataIngredient[] list, Context context) {
         this.list = list;
         this.context = context;
+//        gestureDetector = new GestureDetector(context, new MyGestureDetector());
     }
 
     @Override
@@ -44,6 +47,10 @@ public class GroceriesListAdapter extends BaseAdapter implements ListAdapter {
         //just return 0 if your list items do not have an Id variable.
     }
 
+    private String getGroceryToDisplay( DataIngredient dataIngredient){
+        return dataIngredient.getName() + " (" + dataIngredient.getQuantity() + " " + dataIngredient.getUnit() + ")";
+    }
+
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
@@ -55,9 +62,14 @@ public class GroceriesListAdapter extends BaseAdapter implements ListAdapter {
 
         //Handle TextView and display string from your list
         TextView listItemText = (TextView)view.findViewById(R.id.list_item);
-        listItemText.setText(list[position].getName());
+        listItemText.setText( getGroceryToDisplay(list[position]) );
         view.setBackgroundColor(Utils.getColorForRowPos(position));
-
+        final GestureDetector gestureDetector = new GestureDetector(context, new MyGestureDetector(position, view));
+        view.setOnTouchListener(new View.OnTouchListener() {
+            public boolean onTouch(View v, MotionEvent event) {
+                return gestureDetector.onTouchEvent(event);
+            }
+        });
 
         //Handle buttons and add onClickListeners
 //        Button deleteBtn = (Button)view.findViewById(R.id.delete_btn);
@@ -80,5 +92,43 @@ public class GroceriesListAdapter extends BaseAdapter implements ListAdapter {
 //        });
 
         return view;
+    }
+
+    private final static int REL_SWIPE_MIN_DISTANCE = 0;
+    public boolean onRTLFling(int pos, View view){
+        //show menu
+        View buttonLayout = view.findViewById(R.id.buttons);
+        if(!buttonLayout.isShown()) buttonLayout.setVisibility(View.VISIBLE);
+        Toast.makeText(context,"hiihih RTL " + list[pos].getName(),Toast.LENGTH_SHORT).show();
+        return true;
+    }
+
+    public boolean onLTRFling(int pos, View view){
+        //hide menu
+        View buttonLayout = view.findViewById(R.id.buttons);
+        if(buttonLayout.isShown()) buttonLayout.setVisibility(View.GONE);
+        Toast.makeText(context,"hiihih Left to right " + list[pos].getName(),Toast.LENGTH_SHORT).show();
+        return true;
+    }
+
+    class MyGestureDetector extends GestureDetector.SimpleOnGestureListener {
+
+        int position = 0;
+        View view;
+
+        public MyGestureDetector(int pos, View view){
+            position = pos;
+            this.view = view;
+        }
+
+        @Override
+        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+            if(e1.getX() - e2.getX() >= REL_SWIPE_MIN_DISTANCE) {
+                return onRTLFling(position, view);
+            }  else {
+                return onLTRFling(position, view);
+            }
+        }
+
     }
 }
