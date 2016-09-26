@@ -16,8 +16,10 @@ import java.util.Set;
 public class DataHolder {
 
     //recipies screen data
+    public static String eatingOut = "eating out";
     private static Map<String, Integer> recipiesForMealPlan = new HashMap<>();
     private static Map<String, DataIngredient> groceriesToShop = new HashMap<>();
+    private static String[][] mealsSelected = new String[7][3];
 
 
     //add dish screen data
@@ -31,8 +33,44 @@ public class DataHolder {
 
     static {
         populateDummyRecipies();
+        initMealsSelected();
         holder.injectMockDataForTesting();
     }
+
+    private static void initMealsSelected(){
+        for(int i=0; i<7; i++){
+            for(int j=0; j<3; j++){
+                mealsSelected[i][j] = eatingOut;
+            }
+        }
+    }
+
+    public String getMealSelected(int row, int col){
+        return mealsSelected[row][col];
+    }
+    public void setMealSelected(int row, int col, String recipieName){
+        mealsSelected[row][col] = recipieName;
+    }
+
+    public String[] getAvailableMeals(){
+        Set keys = recipiesForMealPlan.keySet();
+        String[] possibleMeals =  (String[]) keys.toArray(new String[keys.size()]);
+        ArrayList<String> mealsToShow = new ArrayList<String>();
+        for(int i=0; i<possibleMeals.length; i++){
+            String r = possibleMeals[i];
+            if(recipiesForMealPlan.get(r) == 0) continue;
+            mealsToShow.add(r);
+        }
+        mealsToShow.add(eatingOut);
+        return mealsToShow.toArray(new String[mealsToShow.size()]);
+    }
+
+//    public void addbackRecipie(String r){
+//        if(recipiesForMealPlan.containsKey(r)){
+//            Integer val = recipiesForMealPlan.get(r);
+//            recipiesForMealPlan.put(r, val+1);
+//        } else recipiesForMealPlan.put(r, val+1);
+//    }
 
     public DataIngredient[] getGroceriesToShop(){
 
@@ -69,6 +107,7 @@ public class DataHolder {
     //todo: remove this test code
     private void injectMockDataForTesting(){
         addToMealPlan("eggs toast");
+        addToMealPlan("banana bread");
         addToMealPlan("banana bread");
 //        addToMealPlan("banana bread");
 //        for(int i=0; i<20; i++){
@@ -157,12 +196,23 @@ public class DataHolder {
 
     public void addToMealPlan(String recipieName){
         recipieName = recipieName.toLowerCase();
+        incrementMealCount(recipieName);
+        addRecipieIngredientsToGroceries(recipieName, 1);
+    }
+
+    public void incrementMealCount(String recipieName) {
         Integer val = recipiesForMealPlan.get(recipieName);
         if(val == null){
             recipiesForMealPlan.put(recipieName, 1);
         } else {
             recipiesForMealPlan.put(recipieName, val+1);
         }
-        addRecipieIngredientsToGroceries(recipieName, 1);
+    }
+
+    public void decrementMealCount(String recipieName) {
+        Integer val = recipiesForMealPlan.get(recipieName);
+        if(val != null && val > 0){
+            recipiesForMealPlan.put(recipieName, val-1);
+        }
     }
 }
