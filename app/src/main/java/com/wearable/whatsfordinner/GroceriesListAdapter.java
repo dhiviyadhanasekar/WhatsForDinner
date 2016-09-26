@@ -1,17 +1,15 @@
 package com.wearable.whatsfordinner;
 
 import android.content.Context;
-import android.text.Layout;
-import android.util.Log;
+import android.graphics.Paint;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ListAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.view.LayoutInflater;
 import android.view.View;
-import java.util.ArrayList;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
@@ -61,8 +59,11 @@ public class GroceriesListAdapter extends BaseAdapter implements ListAdapter {
         }
 
         //Handle TextView and display string from your list
-        TextView listItemText = (TextView)view.findViewById(R.id.list_item);
+        final TextView listItemText = (TextView)view.findViewById(R.id.list_item);
         listItemText.setText( getGroceryToDisplay(list[position]) );
+        if(list[position].getQuantity() <= 0){
+            listItemText.setPaintFlags(listItemText.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        }
         view.setBackgroundColor(Utils.getColorForRowPos(position));
         final GestureDetector gestureDetector = new GestureDetector(context, new MyGestureDetector(position, view));
         view.setOnTouchListener(new View.OnTouchListener() {
@@ -72,25 +73,36 @@ public class GroceriesListAdapter extends BaseAdapter implements ListAdapter {
         });
 
         //Handle buttons and add onClickListeners
-//        Button deleteBtn = (Button)view.findViewById(R.id.delete_btn);
-//        Button addBtn = (Button)view.findViewById(R.id.add_btn);
-//
-//        deleteBtn.setOnClickListener(new View.OnClickListener(){
-//            @Override
-//            public void onClick(View v) {
-//                //do something
-//                list.remove(position); //or some other task
-//                notifyDataSetChanged();
-//            }
-//        });
-//        addBtn.setOnClickListener(new View.OnClickListener(){
-//            @Override
-//            public void onClick(View v) {
-//                //do something
-//                notifyDataSetChanged();
-//            }
-//        });
+        Button plusButton = (Button) view.findViewById(R.id.plusButton);
+        plusButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                float qty = list[position].getQuantity();
+                list[position].setQuantity(qty+1);
+                listItemText.setText( getGroceryToDisplay(list[position]) );
+//                Toast.makeText(context,"qty in map " + DataHolder.getInstance().getGroceryItem(list[position].getName()).getQuantity()
+//                        ,Toast.LENGTH_SHORT).show();
+            }
+        });
 
+        Button minusButton = (Button) view.findViewById(R.id.minusButton);
+        minusButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                int qty = (int) list[position].getQuantity();
+                if(qty > 0) {
+                    list[position].setQuantity(qty - 1);
+                } else if(list[position].getQuantity() >0){
+                    list[position].setQuantity(0);
+                }
+                if((int)list[position].getQuantity() == 0){
+                    listItemText.setPaintFlags(listItemText.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                }
+                listItemText.setText( getGroceryToDisplay(list[position]) );
+//                Toast.makeText(context,"qty in map " + DataHolder.getInstance().getGroceryItem(list[position].getName()).getQuantity()
+//                        ,Toast.LENGTH_SHORT).show();
+            }
+        });
         return view;
     }
 
@@ -99,7 +111,7 @@ public class GroceriesListAdapter extends BaseAdapter implements ListAdapter {
         //show menu
         View buttonLayout = view.findViewById(R.id.buttons);
         if(!buttonLayout.isShown()) buttonLayout.setVisibility(View.VISIBLE);
-        Toast.makeText(context,"hiihih RTL " + list[pos].getName(),Toast.LENGTH_SHORT).show();
+//        Toast.makeText(context,"hiihih RTL " + list[pos].getName(),Toast.LENGTH_SHORT).show();
         return true;
     }
 
@@ -107,7 +119,7 @@ public class GroceriesListAdapter extends BaseAdapter implements ListAdapter {
         //hide menu
         View buttonLayout = view.findViewById(R.id.buttons);
         if(buttonLayout.isShown()) buttonLayout.setVisibility(View.GONE);
-        Toast.makeText(context,"hiihih Left to right " + list[pos].getName(),Toast.LENGTH_SHORT).show();
+//        Toast.makeText(context,"hiihih Left to right " + list[pos].getName(),Toast.LENGTH_SHORT).show();
         return true;
     }
 

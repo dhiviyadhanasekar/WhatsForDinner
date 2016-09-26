@@ -11,13 +11,13 @@
         android:orientation="horizontal"
         android:id="@+id/buttons"
         android:visibility="gone">
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="32dp"
-        android:layout_height="35dp"
-        android:text="+"
-        android:id="@+id/plusButton"
-        android:clickable="true" />
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="32dp"
+            android:layout_height="35dp"
+            android:text="+"
+            android:id="@+id/plusButton"
+            android:clickable="true" />
 
         <Button
             style="?android:attr/buttonStyleSmall"

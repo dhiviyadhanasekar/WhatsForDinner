@@ -41,10 +41,20 @@ public class RecipiesLandscapeFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        loadListView();
+    }
+
+    @Override
     public void onViewCreated(View v, Bundle savedInstanceState) {
         super.onViewCreated(v, savedInstanceState);
         fragmentView = v;
         lv = (ListView) v.findViewById(R.id.recipiesListView);
+        loadListView();
+    }
+
+    private void loadListView() {
         final String products[] = DataHolder.getInstance().getAllRecipies();
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), R.layout.list_item, R.id.list_item, products){
             @Override

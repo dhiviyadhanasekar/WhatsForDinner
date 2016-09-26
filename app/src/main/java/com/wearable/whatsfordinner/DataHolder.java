@@ -35,16 +35,7 @@ public class DataHolder {
     }
 
     public DataIngredient[] getGroceriesToShop(){
-//        Set keys = recipiesForMealPlan.keySet();
-//        String[] recipiesToAdd = (String[]) keys.toArray(new String[keys.size()]);
-//        for(int i=0; i<recipiesToAdd.length; i++){
-//            String rName = recipiesToAdd[i];
-//            rName = rName.toLowerCase();
-//            float rCount =  recipiesForMealPlan.get(rName);
-//            addRecipieIngredientsToGroceries(rName, rCount);
-//        }
 
-//        return groceriesToShop;
         Set keysGroceries = groceriesToShop.keySet();
         String[] groceriesToAdd = (String[]) keysGroceries.toArray(new String[keysGroceries.size()]);
         DataIngredient[] groceriesToDisplay = new DataIngredient[keysGroceries.size()];
@@ -53,6 +44,11 @@ public class DataHolder {
             groceriesToDisplay[i] = (groceriesToShop.get(groceriesToAdd[i]));
         }
         return groceriesToDisplay;
+    }
+
+    public DataIngredient getGroceryItem(String gname){
+        gname = gname.toLowerCase();
+        return groceriesToShop.get(gname);
     }
 
     private void addRecipieIngredientsToGroceries(String rName, float rCount) {
@@ -70,10 +66,14 @@ public class DataHolder {
         }
     }
 
+    //todo: remove this test code
     private void injectMockDataForTesting(){
         addToMealPlan("eggs toast");
         addToMealPlan("banana bread");
-        addToMealPlan("banana bread");
+//        addToMealPlan("banana bread");
+//        for(int i=0; i<20; i++){
+//            groceriesToShop.put("test " + i, new DataIngredient("test " + i, i, "pieces"));
+//        }
 //        recipiesForMealPlan.put("eggs toast", 1);
 //        recipiesForMealPlan.put("banana bread", 2);
     }
@@ -82,6 +82,9 @@ public class DataHolder {
         DataRecipie bananaBread = new DataRecipie();
         List<DataIngredient> bananaBreadIn = new ArrayList<>();
         bananaBreadIn.add(new DataIngredient("bread", 1, "loaves"));
+        bananaBreadIn.add(new DataIngredient("banana", 20, "hands"));
+        bananaBreadIn.add(new DataIngredient("baking powder", 4, "lbs"));
+        bananaBreadIn.add(new DataIngredient("cashews", 2, "lbs"));
         bananaBread.setIngredients( ( List<DataIngredient>) bananaBreadIn);
         bananaBread.setRecipieName("banana bread");
         bananaBread.setInstructions("Cream together butter and sugar."
@@ -93,8 +96,17 @@ public class DataHolder {
 
         DataRecipie eggsToast = new DataRecipie();
         List<DataIngredient> eggsToastIn = new ArrayList<>();
-        eggsToastIn.add(new DataIngredient("eggs", 5, "eggs"));
+        eggsToastIn.add(new DataIngredient("eggs", 5, "dozens"));
         eggsToastIn.add(new DataIngredient("bread", 1, "loaves"));
+        eggsToastIn.add(new DataIngredient("vanilla", 1, "oz"));
+        eggsToastIn.add(new DataIngredient("sugar", 5, "lbs"));
+        eggsToastIn.add(new DataIngredient("cinnamon", (float)0.5, "lbs"));
+        eggsToastIn.add(new DataIngredient("maple syrup", 30, "oz"));
+        eggsToastIn.add(new DataIngredient("strawberries", 10, "pieces"));
+        eggsToastIn.add(new DataIngredient("grapes", 10, "pieces"));
+        eggsToastIn.add(new DataIngredient("almonds", 10, "pieces"));
+        eggsToastIn.add(new DataIngredient("milk", 10, "gallons"));
+        eggsToastIn.add(new DataIngredient("salt", 1, "lb"));
         eggsToast.setIngredients( ( List<DataIngredient>) eggsToastIn);
         eggsToast.setRecipieName("eggs toast");
         eggsToast.setInstructions("Mix eggs and put them over bread. toast the bread now. ");
