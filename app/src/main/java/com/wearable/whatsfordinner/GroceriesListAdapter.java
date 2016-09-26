@@ -79,6 +79,7 @@ public class GroceriesListAdapter extends BaseAdapter implements ListAdapter {
             public void onClick(View v) {
                 float qty = list[position].getQuantity();
                 list[position].setQuantity(qty+1);
+                listItemText.setPaintFlags(0);
                 listItemText.setText( getGroceryToDisplay(list[position]) );
 //                Toast.makeText(context,"qty in map " + DataHolder.getInstance().getGroceryItem(list[position].getName()).getQuantity()
 //                        ,Toast.LENGTH_SHORT).show();
