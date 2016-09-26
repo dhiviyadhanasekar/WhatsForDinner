@@ -28,7 +28,8 @@
         <activity android:name=".NewDishActivity" />
         <activity android:name=".MealsActivity" />
         <activity android:name=".RecipiesActivity" />
-        <activity android:name=".GroceriesActivity"></activity>
+        <activity android:name=".GroceriesActivity" />
+        <activity android:name=".NutritionManagerActivity"></activity>
     </application>
 
 </manifest>
