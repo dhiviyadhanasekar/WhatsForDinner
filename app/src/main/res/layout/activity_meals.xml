@@ -25,7 +25,7 @@
             android:layout_width="20dp"
             android:layout_height="40dp"
             android:id="@+id/imageView5"
-            android:src="@drawable/ic_groceries"
+            android:src="@drawable/ic_meals"
             android:layout_weight="0.25" />
 
 
@@ -33,7 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Grocery Shopping"
+            android:text="Weekly Meals Selection"
             android:id="@+id/textView13"
             android:layout_marginLeft="0dp"
             android:textColor="@color/black"
@@ -340,18 +340,117 @@
                     android:layout_marginTop="0dp"
                     android:clickable="true" />
 
+                <Button
+                    android:layout_width="105dp"
+                    android:layout_height="wrap_content"
+                    android:text="Eating out"
+                    android:id="@+id/l_sat_button"
+                    android:layout_gravity="top"
+                    android:gravity="center"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="0dp"
+                    android:clickable="true" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:gravity="top|center"
+                android:focusableInTouchMode="false"
+                android:id="@+id/dinner_row" >
+
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="90dp"
                     android:layout_height="match_parent"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Breakfast"
-                    android:id="@+id/l_sat_button"
+                    android:text="Dinner"
+                    android:id="@+id/textView25"
                     android:background="@color/black"
                     android:textColor="@color/white"
                     android:padding="5dp"
                     android:layout_marginBottom="5dp" />
 
+                <Button
+                    android:layout_width="105dp"
+                    android:layout_height="wrap_content"
+                    android:text="Eating out"
+                    android:id="@+id/d_sun_button"
+                    android:layout_gravity="top"
+                    android:gravity="center"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="0dp"
+                    android:clickable="true" />
+
+                <Button
+                    android:layout_width="105dp"
+                    android:layout_height="wrap_content"
+                    android:text="Eating out"
+                    android:id="@+id/d_mon_button"
+                    android:layout_gravity="top"
+                    android:gravity="center"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="0dp"
+                    android:clickable="true" />
+
+                <Button
+                    android:layout_width="105dp"
+                    android:layout_height="wrap_content"
+                    android:text="Eating out"
+                    android:id="@+id/d_tue_button"
+                    android:layout_gravity="top"
+                    android:gravity="center"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="0dp"
+                    android:clickable="true" />
+
+                <Button
+                    android:layout_width="105dp"
+                    android:layout_height="wrap_content"
+                    android:text="Eating out"
+                    android:id="@+id/d_wed_button"
+                    android:layout_gravity="top"
+                    android:gravity="center"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="0dp"
+                    android:clickable="true" />
+
+                <Button
+                    android:layout_width="105dp"
+                    android:layout_height="wrap_content"
+                    android:text="Eating out"
+                    android:id="@+id/d_thu_button"
+                    android:layout_gravity="top"
+                    android:gravity="center"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="0dp"
+                    android:clickable="true" />
+
+                <Button
+                    android:layout_width="105dp"
+                    android:layout_height="wrap_content"
+                    android:text="Eating out"
+                    android:id="@+id/d_fri_button"
+                    android:layout_gravity="top"
+                    android:gravity="center"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="0dp"
+                    android:clickable="true" />
+
+                <Button
+                    android:layout_width="105dp"
+                    android:layout_height="wrap_content"
+                    android:text="Eating out"
+                    android:id="@+id/d_sat_button"
+                    android:layout_gravity="top"
+                    android:gravity="center"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="0dp"
+                    android:clickable="true" />
             </LinearLayout>
+
         </LinearLayout>
     </HorizontalScrollView>
 

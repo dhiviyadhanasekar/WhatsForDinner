@@ -19,7 +19,7 @@ import android.widget.Toast;
 public class MealsActivity extends AppCompatActivity {
 
     private static final String[] days = {"sun", "mon", "tue", "wed", "thu", "fri", "sat"};
-    private static final  String[] meals = {"b", "l"};
+    private static final  String[] meals = {"b", "l", "d"};
     PopupWindow pickRecipiesPopUp = null;
 
     @Override
@@ -28,7 +28,7 @@ public class MealsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_meals);
 
         for(int i=0; i<days.length; i++){
-            for(int j=0; j<1; j++){
+            for(int j=0; j<meals.length; j++){
                 String buttonID = meals[j] + "_" + days[i] + "_" + "button";
                 int resID = getResources().getIdentifier(buttonID, "id", getPackageName());
                 final Button btn = (Button) findViewById(resID);
@@ -73,9 +73,11 @@ public class MealsActivity extends AppCompatActivity {
                     DataHolder.getInstance().incrementMealCount(currentRecipie);
                 }
                 String selectedR = products[pos].toLowerCase();
-                DataHolder.getInstance().decrementMealCount(selectedR);
+                if(!selectedR.equals(DataHolder.eatingOut)) {
+                    DataHolder.getInstance().decrementMealCount(selectedR);
+                    DataHolder.getInstance().setMealSelected(row, col, selectedR);
+                }
                 b.setText(selectedR);
-                DataHolder.getInstance().setMealSelected(row, col, selectedR);
                 pickRecipiesPopUp.dismiss();
             }
         });
