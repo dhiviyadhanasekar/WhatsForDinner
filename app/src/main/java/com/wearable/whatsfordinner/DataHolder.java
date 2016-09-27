@@ -37,7 +37,7 @@ public class DataHolder {
     static {
         populateDummyRecipies();
         initMealsSelected();
-        holder.injectMockDataForTesting();
+//        holder.injectMockDataForTesting();
     }
 
     private static void initMealsSelected(){
@@ -246,7 +246,7 @@ public class DataHolder {
         eggsToastIn.add(new DataIngredient("grapes", 10, "pieces"));
         eggsToastIn.add(new DataIngredient("almonds", 10, "pieces"));
         eggsToastIn.add(new DataIngredient("milk", 10, "gallons"));
-        eggsToastIn.add(new DataIngredient("salt", 1, "lb"));
+//        eggsToastIn.add(new DataIngredient("salt", 1, "lb"));
         eggsToast.setIngredients( ( List<DataIngredient>) eggsToastIn);
         eggsToast.setRecipieName("eggs toast");
         List<DataIngredient> eggsToastNu = new ArrayList<>();
@@ -264,7 +264,7 @@ public class DataHolder {
         ingredientNames.put("grapes", true);
         ingredientNames.put("almonds", true);
         ingredientNames.put("milk", true);
-        ingredientNames.put("salt", true);
+//        ingredientNames.put("salt", true);
     }
 
     public boolean recipieExists(String newRecipieName){
