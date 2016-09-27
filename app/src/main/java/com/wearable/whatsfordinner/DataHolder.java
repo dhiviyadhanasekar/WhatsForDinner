@@ -200,7 +200,10 @@ public class DataHolder {
         String[] possibleMeals =  (String[]) keys.toArray(new String[keys.size()]);
         for(int i=0; i<possibleMeals.length; i++){
             String r = possibleMeals[i];
-            if(targetClone.get(r).getQuantity() != 0) return "No";
+            float val = targetClone.get(r).getQuantity();
+
+            if(Math.abs(val)>0.09) //continue;
+                return "No";
         }
         return "Yes";
     }

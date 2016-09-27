@@ -81,8 +81,8 @@ public class MealsActivity extends AppCompatActivity {
                 String selectedR = products[pos].toLowerCase();
                 if(!selectedR.equals(DataHolder.eatingOut)) {
                     DataHolder.getInstance().decrementMealCount(selectedR);
-                    DataHolder.getInstance().setMealSelected(row, col, selectedR);
                 }
+                DataHolder.getInstance().setMealSelected(row, col, selectedR);
                 DataHolder.getInstance().updateMealPlanNutrients();
                 b.setText(selectedR);
                 targetAns.setText(DataHolder.getInstance().hasTargetNutrientReached());
