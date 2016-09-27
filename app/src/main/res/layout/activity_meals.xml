@@ -53,7 +53,7 @@
 
     <HorizontalScrollView
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:orientation="vertical"
@@ -454,6 +454,30 @@
         </LinearLayout>
     </HorizontalScrollView>
 
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Monitor Nutrition"
+        android:id="@+id/button3"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:clickable="true"
+        android:onClick="showWeeklyNutrient" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Target Nutrition Reached:"
+        android:id="@+id/textView28" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="No"
+        android:id="@+id/target_nut_ans" />
 
 
 </LinearLayout>

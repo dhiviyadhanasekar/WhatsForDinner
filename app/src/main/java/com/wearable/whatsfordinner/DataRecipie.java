@@ -1,6 +1,7 @@
 package com.wearable.whatsfordinner;
 
 import android.net.Uri;
+import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.List;
  */
 public class DataRecipie {
     private List<DataIngredient> ingredients = new ArrayList<DataIngredient>();
+    private List<DataIngredient> nutrients = new ArrayList<>();
     private String recipieName = "";
     private Uri imageUri = null;
     private String instructions = "";
@@ -30,6 +32,7 @@ public class DataRecipie {
         return imageUri;
     }
     public String getInstructions() { return  instructions; }
+    public List<DataIngredient> getNutrients() { return nutrients; }
 
 //    public void addIngredient(DataIngredient newIngredient){
 //        ingredients.add(newIngredient);
@@ -55,6 +58,12 @@ public class DataRecipie {
             inList.add(this.getIngredients().get(i).getClone());
         }
         rClone.setIngredients(inList);
+        ArrayList<DataIngredient> nList = new ArrayList<>();
+        for(int i=0; i<this.getNutrients().size(); i++){
+            nList.add(this.getNutrients().get(i).getClone());
+        }
+        rClone.setNutrients(nList);
         return rClone;
     }
+    public void setNutrients(List<DataIngredient> n){this.nutrients = n; }
 }

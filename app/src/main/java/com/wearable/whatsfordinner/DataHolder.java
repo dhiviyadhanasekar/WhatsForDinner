@@ -25,6 +25,9 @@ public class DataHolder {
     //add dish screen data
     private static Map<String,Boolean> ingredientNames = new HashMap<String, Boolean>();
     private static Map<String, DataRecipie> recipieNames = new HashMap<String, DataRecipie>();
+    private static Map<String, DataIngredient> targetNutrients = new HashMap<>();
+    private static ArrayList<DataIngredient> mealPlanNutrients = new ArrayList<>();
+//    private static Map<String, DataIngredient> nutrientsFromMealsSelected = new HashMap<>();
 //    private static List<DataRecipie> recipies = new ArrayList<DataRecipie>();
 
 
@@ -52,6 +55,11 @@ public class DataHolder {
         mealsSelected[row][col] = recipieName;
     }
 
+    public void addNewNutrient(DataIngredient inName){
+        if(targetNutrients.containsKey(inName.getName())) return;
+        targetNutrients.put(inName.getName().toLowerCase(),
+                new DataIngredient(inName.getName().toLowerCase(), 0, inName.getUnit().toLowerCase()));
+    }
     public String[] getAvailableMeals(){
         Set keys = recipiesForMealPlan.keySet();
         String[] possibleMeals =  (String[]) keys.toArray(new String[keys.size()]);
@@ -117,6 +125,96 @@ public class DataHolder {
 //        recipiesForMealPlan.put("banana bread", 2);
     }
 
+    public void updateTargetNutrient(String nName, DataIngredient in){
+//        if(targetNutrients.containsKey(nName)){
+            targetNutrients.put(nName, in);
+//        }
+    }
+
+    private Map<String, DataIngredient> updateNutrientsFromMealPlan(){
+        ArrayList<String> tempR = new ArrayList<>();
+        for(int i=0; i<mealsSelected.length; i++){
+            for(int j=0; j<mealsSelected[i].length; j++){
+                String r = mealsSelected[i][j];
+                if(r.equals(eatingOut)) continue;
+                tempR.add(r);
+            }
+        }
+        Map<String, DataIngredient> nutrientsFromMealsSelected = new HashMap<>();
+        for(int i=0; i<tempR.size(); i++){
+            String r = tempR.get(i);
+            List<DataIngredient> inList = recipieNames.get(r).getNutrients();
+            for(int j=0; j<inList.size(); j++){
+                DataIngredient in  = inList.get(j);
+                DataIngredient toUpdate = nutrientsFromMealsSelected.get(in.getName());
+                if(nutrientsFromMealsSelected.containsKey(in.getName())){
+                    toUpdate.setQuantity(toUpdate.getQuantity()+in.getQuantity());
+                    nutrientsFromMealsSelected.put(in.getName(), toUpdate);
+                } else  nutrientsFromMealsSelected.put(in.getName(), in.getClone());
+            }
+        }
+        return nutrientsFromMealsSelected;
+    }
+
+    public ArrayList<DataIngredient> getMealPlanNutrients(){
+        return mealPlanNutrients;
+    }
+
+    public void updateMealPlanNutrients(){
+        Map<String, DataIngredient> nutrientsFromMealsSelected = updateNutrientsFromMealPlan();
+        ArrayList<DataIngredient> list = new ArrayList<>();
+        Set keys = nutrientsFromMealsSelected.keySet();
+        String[] possibleMeals =  (String[]) keys.toArray(new String[keys.size()]);
+        for(int i=0; i<possibleMeals.length; i++){
+            String r = possibleMeals[i];
+            list.add(nutrientsFromMealsSelected.get(r));
+        }
+        mealPlanNutrients = list;
+    }
+
+    private HashMap<String, DataIngredient> cloneTargetNutrients(){
+        HashMap<String, DataIngredient> clone = new HashMap<>();
+        Set keys = targetNutrients.keySet();
+        String[] possibleMeals =  (String[]) keys.toArray(new String[keys.size()]);
+        for(int i=0; i<possibleMeals.length; i++){
+            String r = possibleMeals[i];
+            clone.put(r, targetNutrients.get(r).getClone());
+        }
+        return clone;
+    }
+    public String hasTargetNutrientReached(){
+        HashMap<String, DataIngredient> targetClone = cloneTargetNutrients();
+
+
+        String result = "Yes";
+        for(int i=0; i<mealPlanNutrients.size(); i++){
+            DataIngredient in = mealPlanNutrients.get(i);
+            if(targetClone.containsKey(in.getName())){
+                DataIngredient targetIn = targetClone.get(in.getName());
+                targetIn.setQuantity(targetIn.getQuantity()-in.getQuantity());
+                if(targetIn.getQuantity() < 0) return "No";
+            }
+        }
+
+        Set keys = targetClone.keySet();
+        String[] possibleMeals =  (String[]) keys.toArray(new String[keys.size()]);
+        for(int i=0; i<possibleMeals.length; i++){
+            String r = possibleMeals[i];
+            if(targetClone.get(r).getQuantity() != 0) return "No";
+        }
+        return "Yes";
+    }
+
+    public ArrayList<DataIngredient> getTargetNutrients(){
+        ArrayList<DataIngredient> list = new ArrayList<>();
+        Set keys = targetNutrients.keySet();
+        String[] possibleMeals =  (String[]) keys.toArray(new String[keys.size()]);
+        for(int i=0; i<possibleMeals.length; i++){
+            String r = possibleMeals[i];
+            list.add(targetNutrients.get(r));
+        }
+        return list;
+    }
     private static void populateDummyRecipies() {
         DataRecipie bananaBread = new DataRecipie();
         List<DataIngredient> bananaBreadIn = new ArrayList<>();
@@ -132,6 +230,9 @@ public class DataHolder {
                 "\nBake at 350 degrees for 60 minutes.\nKeeps well, refrigerated.");
         recipieNames.put("banana bread", bananaBread);
         ingredientNames.put("bread", true);
+        ingredientNames.put("banana", true);
+        ingredientNames.put("baking powder", true);
+        ingredientNames.put("cashews", true);
 
         DataRecipie eggsToast = new DataRecipie();
         List<DataIngredient> eggsToastIn = new ArrayList<>();
@@ -148,9 +249,22 @@ public class DataHolder {
         eggsToastIn.add(new DataIngredient("salt", 1, "lb"));
         eggsToast.setIngredients( ( List<DataIngredient>) eggsToastIn);
         eggsToast.setRecipieName("eggs toast");
+        List<DataIngredient> eggsToastNu = new ArrayList<>();
+        eggsToastNu.add(new DataIngredient("carbohydrates", 1, "cal"));
+        holder.addNewNutrient(new DataIngredient("carbohydrates", 1, "cal"));
+        eggsToast.setNutrients(eggsToastNu);
         eggsToast.setInstructions("Mix eggs and put them over bread. toast the bread now. ");
         recipieNames.put("eggs toast", eggsToast);
         ingredientNames.put("eggs", true);
+        ingredientNames.put("vanilla", true);
+        ingredientNames.put("sugar", true);
+        ingredientNames.put("cinnamon", true);
+        ingredientNames.put("maple syrup", true);
+        ingredientNames.put("strawberries", true);
+        ingredientNames.put("grapes", true);
+        ingredientNames.put("almonds", true);
+        ingredientNames.put("milk", true);
+        ingredientNames.put("salt", true);
     }
 
     public boolean recipieExists(String newRecipieName){

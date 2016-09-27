@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_below="@+id/textView11"
-    android:layout_alignParentLeft="true"
-    android:layout_alignParentStart="true"
-    tools:showIn="@layout/activity_new_dish"
-    android:id="@+id/ingredient_input_row"
-    android:weightSum="1">
+    android:layout_height="match_parent"
+    android:orientation="horizontal" >
 
-    <include layout="@layout/list_view"
-        android:layout_width="wrap_content"
+
+    <EditText
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/nutrient_name"
+        android:hint="Nutrient name"
+        android:editable="true"
         />
 
     <EditText
@@ -20,11 +18,10 @@
         android:layout_height="wrap_content"
         android:inputType="number"
         android:ems="10"
+        android:editable="true"
         android:id="@+id/inputQty"
-        android:layout_alignTop="@+id/linearLayout"
-        android:layout_toRightOf="@+id/linearLayout"
-        android:layout_toEndOf="@+id/linearLayout"
-        android:hint="Qty" />
+        android:hint="Qty"
+         />
 
     <EditText
         android:layout_width="71dp"
@@ -37,6 +34,8 @@
         android:layout_toRightOf="@+id/editText"
         android:layout_toEndOf="@+id/editText"
         android:hint="Unit"
-        android:editable="true" />
+        android:editable="true"
+        />
+
 
 </LinearLayout>

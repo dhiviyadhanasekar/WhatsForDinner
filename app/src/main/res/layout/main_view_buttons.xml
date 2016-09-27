@@ -51,7 +51,7 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="80dp"
-            android:id="@+id/imageView2"
+            android:id="@+id/recipie_image"
             android:src="@drawable/ic_recipies"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
@@ -63,8 +63,8 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Recipies"
-            android:id="@+id/textView7"
-            android:layout_below="@+id/imageView2"
+            android:id="@+id/recipies_label"
+            android:layout_below="@+id/recipie_image"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="5dp"
             android:textColor="#0b06a3" />

@@ -1,6 +1,7 @@
 package com.wearable.whatsfordinner;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -10,27 +11,43 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.ArrayAdapter;
+import android.widget.PopupWindow;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 public class NewDishActivity extends AppCompatActivity {
 
     private static final int imageID = 1;
     private static final int PERMISSION_READ_MEDIA = 2;
 
+
     ImageView recipieImageView = null;
     DataHolder dataInstance = DataHolder.getInstance();
     private DataRecipie recipie = null;//new DataRecipie();
     private ArrayList<View> ingredientViews = new ArrayList<View>();
+
+    int viewsCount = 0;
+    HashMap<Integer, View> nutrientList;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +82,41 @@ public class NewDishActivity extends AppCompatActivity {
             DataIngredient inToSet = (i<=recipieIns.size()) ? recipieIns.get(i-1) : null;
             initIngredientView(products, i, inToSet);
         }
+
+        viewsCount = 0;
+        nutrientList = new HashMap<>();
+        for(int i=0; i<recipie.getNutrients().size(); i++){
+            DataIngredient nu = recipie.getNutrients().get(i);
+            createNewNutrient(nu);
+        }
+    }
+
+
+    public void addNutrient(View addView){
+
+        createNewNutrient(null);
+
+    }
+
+    private void createNewNutrient(DataIngredient in ) {
+        LayoutInflater inflater = (LayoutInflater)
+                this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View v = inflater.inflate(R.layout.nutrient_item, null, false);
+        v.setId(viewsCount);
+        nutrientList.put(viewsCount,v);
+        viewsCount++;
+        if(in != null){
+            final TextView listItemText = (TextView)v.findViewById(R.id.nutrient_name);
+            listItemText.setText( in.getName() );
+
+            final TextView qtyTextView = (TextView) v.findViewById(R.id.inputQty);
+            qtyTextView.setText(Float.toString(in.getQuantity()));
+
+            final TextView unitTextView = (TextView) v.findViewById(R.id.inputUnit);
+            unitTextView.setText(in.getUnit());
+        }
+        LinearLayout parent = (LinearLayout) findViewById(R.id.n_view);
+        parent.addView(v);
     }
 
     private void initIngredientView(final String[] products, final int i, DataIngredient inToSet) {
@@ -185,6 +237,30 @@ public class NewDishActivity extends AppCompatActivity {
             inList.add(new DataIngredient(inName, inQty, inUnit));
         }
         recipie.setIngredients(inList);
+
+        Set keys = nutrientList.keySet();
+        Integer[] nutrientViewKeys =  (Integer[]) keys.toArray(new Integer[keys.size()]);
+        ArrayList<DataIngredient> nutrientsToAdd = new ArrayList<DataIngredient>();
+        for(int i=0; i<nutrientViewKeys.length; i++){
+            Integer r = nutrientViewKeys[i];
+            View nView = nutrientList.get(r);
+            if(nView == null) continue;
+            String inName = ((EditText) nView.findViewById(R.id.nutrient_name)).getText().toString();
+            if(inName.length() == 0) continue;
+            String inQtyStr = ((EditText) nView.findViewById(R.id.inputQty)).getText().toString();
+            float inQty = inQtyStr.length() == 0 ? 0 : Float.valueOf( inQtyStr );
+            String inUnit = ((EditText) nView.findViewById(R.id.inputUnit)).getText().toString();
+            DataIngredient in = new DataIngredient(inName, inQty, inUnit);
+            DataHolder.getInstance().addNewNutrient(in);
+            nutrientsToAdd.add(new DataIngredient(inName, inQty, inUnit));
+        }
+//        ArrayList<DataIngredient> nList = new ArrayList<>();
+//        for(int i=0; i<nutrientsAdapter.getNutrients().size(); i++){
+//            DataIngredient n = nutrientsAdapter.getNutrients().get(i);
+//            if(n.getName().length() == 0) continue;
+//            nList.add(n);
+//        }
+        recipie.setNutrients(nutrientsToAdd);
 
         String saveMessage = "Recipie " + recipieName ;
         if(dataInstance.recipieExists(recipieName)){

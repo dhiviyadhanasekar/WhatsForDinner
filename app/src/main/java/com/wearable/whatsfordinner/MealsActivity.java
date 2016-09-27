@@ -1,6 +1,7 @@
 package com.wearable.whatsfordinner;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MealsActivity extends AppCompatActivity {
@@ -21,6 +23,7 @@ public class MealsActivity extends AppCompatActivity {
     private static final String[] days = {"sun", "mon", "tue", "wed", "thu", "fri", "sat"};
     private static final  String[] meals = {"b", "l", "d"};
     PopupWindow pickRecipiesPopUp = null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +46,9 @@ public class MealsActivity extends AppCompatActivity {
                 });
             }
         }
+        DataHolder.getInstance().updateMealPlanNutrients();
+        final TextView targetAns = (TextView) findViewById(R.id.target_nut_ans);
+        targetAns.setText(DataHolder.getInstance().hasTargetNutrientReached());
     }
 
     public void showRecipiesPopUp(View view, final Button b, final int row, final int col){
@@ -50,8 +56,8 @@ public class MealsActivity extends AppCompatActivity {
         LayoutInflater inflater = (LayoutInflater)
                 this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View v = inflater.inflate(R.layout.pick_recipies_popup, null, false);
-
-        ListView lv = (ListView) v.findViewById(R.id.recipiesListView);
+       final TextView targetAns = (TextView) findViewById(R.id.target_nut_ans);
+                ListView lv = (ListView) v.findViewById(R.id.recipiesListView);
         final String products[] = DataHolder.getInstance().getAvailableMeals();
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.list_item, R.id.list_item, products){
             @Override
@@ -77,12 +83,20 @@ public class MealsActivity extends AppCompatActivity {
                     DataHolder.getInstance().decrementMealCount(selectedR);
                     DataHolder.getInstance().setMealSelected(row, col, selectedR);
                 }
+                DataHolder.getInstance().updateMealPlanNutrients();
                 b.setText(selectedR);
+                targetAns.setText(DataHolder.getInstance().hasTargetNutrientReached());
                 pickRecipiesPopUp.dismiss();
             }
         });
 
         pickRecipiesPopUp = new PopupWindow(v, 1000, 650, true);
         pickRecipiesPopUp.showAtLocation(this.findViewById(R.id.meals_activity_screen), Gravity.CENTER, 0, 0);
+    }
+
+    public void showWeeklyNutrient(View view){
+        Intent editModeActivity = new Intent(getApplicationContext(), NutritionManagerActivity.class);
+        editModeActivity.putExtra("weeklyMealPlan", "true");
+        startActivity(editModeActivity);
     }
 }

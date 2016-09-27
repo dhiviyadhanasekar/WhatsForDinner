@@ -32,4 +32,6 @@ public class DataIngredient {
     public void setQuantity(float newQty){
         this.quantity = newQty;
     }
+    public void setName(String n) {this.name = n.toLowerCase();}
+    public void setUnit(String u){this.unit = u.toLowerCase();}
 }
